@@ -1,0 +1,26 @@
+{
+  "name": "specs",
+  "version": "1.0.0",
+  "description": "A node project for VuePress for the specs repository",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs -p 3000",
+    "build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kgrid/specs.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "a flynn",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/kgrid/specs/issues"
+  },
+  "homepage": "https://github.com/kgrid/specs#readme",
+  "dependencies": {
+    "vuepress": "^1.2.0"
+  }
+}
