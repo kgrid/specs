@@ -2,7 +2,7 @@
 
 This section is non-normative.
 
-This Knowledge Object Common Packaging (KOCP) specification describes an application-independent approach to the storage of computable knowledge objects in a structured, transparent, and predictable manner. 
+This Knowledge Object Common Packaging (KOCP) specification describes an application-independent approach to the storage of computable knowledge objects in a structured, transparent, and predictable manner. The KOCP spec is suitable for serialization and distribution of KOs. It is also the native dissemination and submission package for the Library component of Knowledge Grid (import/export). It also acts as the activatable/runnable package for the Activator component of the Knowledge Grid.
 
 
 ## Purpose
@@ -57,29 +57,74 @@ See [KOIO] for matching ontology terms....
 #### Knowledge Object:
 A collection of metadata and binary files that together have a unique identifier (including version identifier). There are three required file types: a service description, a deployment description, and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. See [Activation Spec] for details of the roles of the these files.
 
+> KOIO term — koio:KnowledgeObject
+
 #### Service Description:
+
+(Required) An document consisting of one or more files describing the services or services ([endpoints]) provide by the payload of the Knowledge Object. The service description follows the [OpenAPI V3] specification. THe service specification is a complete specification of the API that will be exposed by the knowledge grid for a particular knowledge object. Clients can consume the service specification in order to navigate the API for the object or generate client code that interacts with the object. 
+
+There is no default service description???
+
+Currently the service description assumes a restful HTTP API.
+
+The service provides an API version, list of endpoints, schemas for inputs and outputs, error codes etc.
+
+> KOIO term — koio:ServiceSpecification. def., an InformationArtifact that describes a computational service that is somehow enabled by a KnowledgeObject
 
 #### Deployment Description
 
+A deployment descriptor  (DD) refers to a configuration file for an artifact that is deployed to some container/engine. 
+
+In the Knowledge Grid, a deployment descriptor:
+- _should_ identify a suitable runtime for the payload(s) associated with a particular endpoint. 
+- _may_ also provide information to a runtime adapter about the deployment (a list of data files). These properties may be runtime specific.
+- _may_ point to other artifacts used by the runtime for deployment (e.g. a Docker file)
+- _must_ be a json or yaml file with an `"runtime"` key and an `"endpoints array of 
+
+> DeploymentInstruction = def., an InformationArtifact that describes how to deploy a KnowledgeObject in the Knowledge Grid platform
+
 #### Metadata
 
-#### API Version
+Metadata describing the structure and elements of the KO is contained in JSON or YAML files named according to the following scheme.... At a minimum administrative metadata should include... and structural metadata should follow the KOIO, and must be in a file named `metadata.json`. See [Conceptual KO]().
 
-#### Implementation Version
+#### Implementation Version and API version
+
+The implementation version, with the ARK (or other persistent unique ID), uniquely identifies the set of KO elements in this package and is used to name the the packaged object. The API version reference form the Service Description is not unique to the package and is not part of this Packaging Spec. See [API Version]() in the [Conceptual KO](), and [Activation spec]().
 
 #### Endpoint
 
-### Payload
+An endpoint represents a particular service offered by the KO (See #Service Description, above). Payloads may be organized to implement each payload separately or may be grouped together in Payload files. See [Activation spec]()
 
-## 3. The Knowledge Object
+#### Payload
 
-- Result of a deliberative, analytic process
-- Susceptible to scale stories
-- Externalizable knowledge with fairly clear boundaries/characterization
+An array of binary artifacts comprising the actual implementation of one or more endpoints....
 
-A key goal is allowing KOs to be nearly ready to be integrated into practice.
+## 3. The Knowledge Object Common Package
 
-A central feature of KOs is there dual nature as digital artifacts needing to meet the FAIR principles and services that can be used at scale in a variety of systems. 
+A key goal is allowing KOs to be nearly ready to be integrated into practice. A central feature of KOs is there dual nature as digital artifacts needing to meet the FAIR principles and services that can be used at scale in a variety of systems. 
+
+```
+naan-name-version [object root]
+  |__ package_metadata.json
+  |__ metadata.json
+  |__ service.yaml
+  |__ deployment.yaml
+  |__ [file_1, file_2, ....]
+  |__ [metadata_file_1, metadata_file_2, ...]
+
+```
+The metadata.json file contains the structural description of the object
+```yaml
+{
+...
+"koio:packagingVersion": "2.1", //move to its own file
+"koio:additionalMetadata": ["citations.json","domain.json",...],
+"koio:hasService": "service.yaml",
+"koio:hasDeployment": "service.yaml",
+--"koio:hasPayload": ["le.js", "lebyagr.json"],--
+"koio:hasPayload": "content"
+...
+```
 
 ---
 ---
