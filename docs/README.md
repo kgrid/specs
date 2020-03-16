@@ -101,7 +101,7 @@ An array of binary artifacts comprising the actual implementation of one or more
 
 ## 3. The Knowledge Object Common Package
 
-A key goal is allowing KOs to be nearly ready to be integrated into practice. A central feature of KOs is there dual nature as digital artifacts needing to meet the FAIR principles and services that can be used at scale in a variety of systems. 
+A key goal is allowing KOs to be nearly ready to be integrated into practice. A central feature of KOs is there dual nature as digital artifacts needing to meet the FAIR principles and services that can be used at scale in a variety of systems. See [KO Whitepaper] or [What is a KO?] or [Knowledge Object Primer]....
 
 ```
 naan-name-version [object root]
