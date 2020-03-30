@@ -113,6 +113,8 @@ naan-name-version [object root]
   |__ [metadata_file_1, metadata_file_2, ...]
 
 ```
+
+### metadata.json
 The metadata.json file contains the structural description of the object
 ```yaml
 {
@@ -125,6 +127,12 @@ The metadata.json file contains the structural description of the object
 "koio:hasPayload": "content"
 ...
 ```
+
+#### Service Description
+
+
+### Deployment Description
+
 
 ---
 ---
@@ -155,3 +163,60 @@ The metadata.json file contains the structural description of the object
 - Susceptible to scale stories
 - Externalizable knowledge with fairly clear boundaries/characterization
 
+# Appendix 1 — service and deployment descriptors
+
+## service.yaml
+
+- OpenAPI 3 and uses linked data principles
+- Only describes the services, not resources/file locations
+- Uses relative URLs wherever possible 
+- URLs are relative to the server the service.yaml was fetched from(`servers` element should point to `/naan/name`)
+- Is **NOT** KO focused
+- Has an API version, NOT a code version
+- Paths constructed from `server` and `path` element work only with activated KOs in an activator, and can be used a "keys" in service location
+- The relationship between the `ark` and the _service path_ is **NOT** the same as the relationship between the `ark` and a _resource path_ 
+
+
+## deployment.yaml (.json)
+
+- Is a linked data resource
+- has an `id` field that can be resolved to the KO on the _shelf_
+- Uses the same ID strategy as the shelf does
+- contains one or more `path` elements whose values are the `endpoints` implemented by the artifacts named for each one
+- Refers to code artifacts using the `artifacts` element and uses relative links (relative to the `id` element)
+- Is NOT concerned with top level resolution, may not need an `ark`
+-  
+
+```yaml
+id: /naan/name
+version: v1.2    ## API version, NOT code
+paths:      
+  /foo:
+    artifacts:
+      - index.js
+      - refdata.json  
+  /bar:
+    artifacts:
+    - index.js
+    - refdata.json
+```
+```json
+{
+  "id": "/name/name",
+  "version": "v1.2",
+  "paths": {
+    "/foo": {
+      "artifacts": [
+        "index.js",
+        "refdata.json"
+      ]
+    },
+    "/bar": {
+      "artifacts": [
+        "index2.js",
+        "refdata2.json"
+      ]
+    }
+  }
+}
+```
