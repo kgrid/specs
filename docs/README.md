@@ -165,6 +165,10 @@ The metadata.json file contains the structural description of the object
 
 # Appendix 1 — service and deployment descriptors
 
+In order to activate a KO the adapter needs access to _resource paths_ in the KO (mainly the files listed in `artifacts` in the deployment descriptor). The activator needs to know the (full) _service path_ to use as a key in order to map requests to a particular _executor_ which implements the service. 
+
+The runtime may not need to know the service path, unless it needs to maintain a map of service paths to executors for local use. How should the runtime (native, or w/ runtime adapter interface) be given the full _service_ path?
+
 ## service.yaml
 
 - OpenAPI 3 and uses linked data principles
@@ -189,7 +193,7 @@ The metadata.json file contains the structural description of the object
 
 ```yaml
 id: /naan/name
-version: v1.2    ## API version, NOT code
+version: v1.2    ## Code version? API version?
 paths:      
   /foo:
     artifacts:
