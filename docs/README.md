@@ -105,12 +105,18 @@ A key goal is allowing KOs to be nearly ready to be integrated into practice. A 
 
 ```
 naan-name-version [object root]
-  |__ package_metadata.json
-  |__ metadata.json
-  |__ service.yaml
-  |__ deployment.yaml
-  |__ [file_1, file_2, ....]
-  |__ [metadata_file_1, metadata_file_2, ...]
+  ├── metadata.json
+  ├── service.yaml
+  ├── deployment.yaml
+  ├── payload_file_1
+  ├── payload_file_2
+  ├── ... more payload files
+  ├── payload-directory [optional]
+  │     └── ... more payload files
+  ├── payload_manifest.json [optional]
+  ├── metadata_file_1
+  ├── metadata_file_2
+  └── ... more metadata files
 
 ```
 
@@ -118,18 +124,38 @@ naan-name-version [object root]
 The metadata.json file contains the structural description of the object
 ```yaml
 {
-...
-"koio:packagingVersion": "2.1", //move to its own file
+"@id":"ark:naan/name/version",
+"@type":"koio:KnowledgeObject",
+"@context":"http://kgrid.org/koio/contexts/knowledgeobject.jsonld",
+"koio:packagingVersion": "2.1",
 "koio:additionalMetadata": ["citations.json","domain.json",...],
 "koio:hasService": "service.yaml",
-"koio:hasDeployment": "service.yaml",
---"koio:hasPayload": ["le.js", "lebyagr.json"],--
-"koio:hasPayload": "content"
-...
+"koio:hasDeployment": "deployment.yaml",
+"koio:hasPayload": ["le.js", "lebyagr.json"]
+"koio:hasPayloadContainer":"payload-directory"
+"koio:hasPayloadManifest":"payload_manifest.json"
+... additional descriptive and administrative metadata
+}
 ```
+#### Core metadata
+- `@id` is a unique identifier for this object that allows it to be resolved within the knowledge grid. The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org) and top-level resolvers like [Name2Thing](http://www.n2t.net) and [Identifiers.org](http://www.identifiers.org). (Support for other identifiers like [DOI](http://www.doi.org)s is planned). 
+    - It can either be an absolute or relative URL.
+    - See [Node Identifiers](https://w3c.github.io/json-ld-syntax/#node-identifiers) section of json-ld syntax. 
+- `@type` Setting this to `"koio:KnowledgeObject"` is what declares this as a Knowledge Object. The Knowledge Grid depends on this when determining whether something is a Knowledge Object.
+- `@context`  is used to map koio terms to IRIs (along with other terms). Contexts can either be directly embedded into the document (an embedded context) or be referenced using a URL. Please use the koio context url: http://kgrid.org/koio/contexts/knowledgeobject.jsonld
+    - See [The Context](https://www.w3.org/TR/json-ld/#the-context) section of json-ld syntax
+- `koio:packagingVersion` The metadata file must contain a koio packaging version corresponding to the version of this specification that the object follows.
+- `additional descriptive and administrative metadata` we recommend using existing schemas and vocabularies (i.e. Dublin Core, etc.) when adding metadata. Some additional metadata may be required by particular implementations of Knowledge Grid components or institutional policies.
+
+#### Parts of a knowledge object (Structural Data)
+- `koio:additionalMetadata` (Proposed) an array of paths for any other metadata files that may have been created for this object.
+- `koio:hasService` the path to the service description file in this Knowledge Object
+- `koio:hasDeployment` the path to the deployment description file in this Knowledge Object
+- `koio:hasPayload` an array of paths to files in the executable payload.
+- `koio:hasPayloadContainer` (Proposed) a path to the directory containing payload files
+- `koio:hasPayloadManifest` (Proposed) a path to a manifest file that describes the files in the payload.
 
 #### Service Description
-
 
 ### Deployment Description
 
