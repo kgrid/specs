@@ -38,7 +38,7 @@ Semantic versioning; archival, implementation, and API versioning
 
 #### Trust
 
-Robustness, certifaction, verifiability, provenance, suitability, reputation.
+Robustness, certification, verifiability, provenance, suitability, reputation.
 
 ## Status of this document
 
@@ -155,98 +155,70 @@ The metadata.json file contains the structural description of the object
 - `koio:hasPayloadContainer` (Proposed) a path to the directory containing payload files
 - `koio:hasPayloadManifest` (Proposed) a path to a manifest file that describes the files in the payload.
 
-#### Service Description
+### Service Description
+The Service Description is an [OpenAPI 3](http://spec.openapis.org/oas/v3.0.3) document that describes the services (endpoints) implemented by the knowledge object. Each path should correspond to an element in the Deployment Descriptor (which describes the implementation of the endpoint). Each path should describe the request and response characteristics of the endpoint exposed by the API.
+- The OpenAPI Server endpoint should use a relative URL that matches the knowledge object identifier. (URLs are relative to the server the service.yaml was fetched from; `servers` element should point to `/naan/name`).
+- Has an API version, NOT a code version
+- Should describe the schemas for the inputs and outputs
+- Add `x-kgrid-activation` for each path with deployment information (deprecated in favor of Deployment Description)
+- Service paths may be multi-level (e.g. `/welcome/hello/howdy`)
 
 ### Deployment Description
-
-
----
----
-
-### Notes:
-
-### Describing KAAR (common vocabularies and standard identifiers; suitable as a SIP)
-
-### Describing KAAS (KOIO and OpenAPI)
-
-### Linking CBK with supporting/corroborative sources, incl. provenance 
-
-### Additional domain and other descriptive metadata (is extensible)
-
-### Versioning (both resource and service; e.g. artifact and API versioning)
-
-### Some access to relevant artifacts in the package (KAAR/KAAS)
-
-### Insuring the integrity of the package (at least as a whole) at the point of deployment
-
-### Storage diversity (both LDP/RDF/Graph and simple file/cache storage)
-
-### Ability to package multiple KOs as a collection with some integrity checks
-
-### KO types: 
-- Data, Query, Lookup, Calculation, ...
-- Result of a deliberative, analytic process
-- Susceptible to scale stories
-- Externalizable knowledge with fairly clear boundaries/characterization
-
-# Appendix 1 — service and deployment descriptors
-
-In order to activate a KO the adapter needs access to _resource paths_ in the KO (mainly the files listed in `artifacts` in the deployment descriptor). The activator needs to know the (full) _service path_ to use as a key in order to map requests to a particular _executor_ which implements the service. 
-
-The runtime may not need to know the service path, unless it needs to maintain a map of service paths to executors for local use. How should the runtime (native, or w/ runtime adapter interface) be given the full _service_ path?
-
-## service.yaml
-
-- OpenAPI 3 and uses linked data principles
-- Only describes the services, not resources/file locations
-- Uses relative URLs wherever possible 
-- URLs are relative to the server the service.yaml was fetched from(`servers` element should point to `/naan/name`)
-- Is **NOT** KO focused
-- Has an API version, NOT a code version
-- Paths constructed from `server` and `path` element work only with activated KOs in an activator, and can be used a "keys" in service location
-- The relationship between the `ark` and the _service path_ is **NOT** the same as the relationship between the `ark` and a _resource path_ 
-
-
-## deployment.yaml (.json)
-
-- Is a linked data resource
-- has an `id` field that can be resolved to the KO on the _shelf_
-- Uses the same ID strategy as the shelf does
-- contains one or more `path` elements whose values are the `endpoints` implemented by the artifacts named for each one
-- Refers to code artifacts using the `artifacts` element and uses relative links (relative to the `id` element)
-- Is NOT concerned with top level resolution, may not need an `ark`
--  
-
-```yaml
-id: /naan/name
-version: v1.2    ## Code version? API version?
-paths:      
-  /foo:
-    artifacts:
-      - index.js
-      - refdata.json  
-  /bar:
-    artifacts:
-    - index.js
-    - refdata.json
 ```
-```json
-{
-  "id": "/name/name",
-  "version": "v1.2",
-  "paths": {
-    "/foo": {
-      "artifacts": [
-        "index.js",
-        "refdata.json"
-      ]
-    },
-    "/bar": {
-      "artifacts": [
-        "index2.js",
-        "refdata2.json"
-      ]
-    }
-  }
-}
+"@id": ark:/naan/name/version
+endpoints:
+  /hello:
+      artifact:
+        - 'src/hello.js'
+        - 'src/utils.js'
+      adapter: 'PROXY'
+      engine: 'node'
+      entry: 'src/hello.js'
+      function: 'sayHello'
+  /goodbye:
+      artifact:
+        - 'src/GoodBye.java'
+        - 'src/SomeOtherFile.java'
+      adapter: 'PROXY'
+      engine: 'java'
+      entry: 'src/GoodBye.java'
+      function: 'main'
 ```
+Must describe each endpoint that the service implements. Each endpoint must correspond to one in the Service Description. Should be a linked data resource.
+- Must have an `id` field that can be resolved to the KO on the shelf.
+- Uses the same identifiers (currently ARK) as other kgrid components.
+
+##### Properties required by Activator
+- `endpoints` (Required) Is the map of service paths to deployment information for that path.
+- `/<endpoint path>` (Required) These are the paths for each endpoint.
+    - `adapter` (Required, will be deprecated soon) specifies which adapter the activator should use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](./runtime-adapter.md)
+    - `engine` The runtime that this Knowledge Object needs to be activated in.
+##### Properties required by Runtimes
+- `artifact` (Required) An array pointing to each artifact this endpoint depends upon. These artifacts are loaded by a runtime at the time of activation. These paths are relative to the Deployment Description.
+- `entry` path to the file in the payload that contains the entry point, or "main" method. 
+- `function` the main method that will be called to activate the object.
+    
+### Payload Files
+The files related to the implementation of the services that this Knowledge Object provides. 
+- Can be in a directory, or all at top level, and should be referenced by the Metadata.json in the `hasPayload` element. 
+- Payload files listed in the `hasPayload` element are useful for object browsing in libraries, signing, diffing two objects, etc. (The specification of payload objects is currently under development).
+- Payload files may be human or machine readable and of any type.
+- Payload files are limited in size only by the limits of the operating system. 
+- There is no limit to the number of payload files. 
+- Payload files should be organized in a way that is natural for the code that implements the service.
+
+##### Payload Manifest File (Proposed)
+A json or yaml file that lists payload files in the same format that is used by `hasPayload` in metadata.json. Absolute or relative references are accepted. 
+### Additional Metadata (Proposed)
+Any additional files containing information that may be useful to those using this Knowledge Object. For example, linking CBK with supporting/corroborative sources, incl. provenance and additional domain and other descriptive metadata (is extensible).
+
+## 4. Versioning 
+- both resource and service; e.g. artifact and API versioning
+- Should use semantic versioning, but may use a versioning scheme appropriate for the particular knowledge domain.
+- Service API versions may change less often than code versions.
+- (Proposed) Multiple versions of the same object may be packaged together as a knowledge object collection.
+- API version (in Service Description: OpenAPI 3 version element) and code version (in metadata.json) do not have to be in sync, but KO developers should consider incrementing the API patch version when releasing new versions of an object even if the API did not change.
+- (Proposed) Version strings should be added to the identifier as a qualifier for the ARK (See "ARK Anatomy" section of [ARK docs](https://n2t.net/e/ark_ids.html) as well as "Base Identifier Extensions" in [Identifier Concepts and Practices](https://ezid.cdlib.org/learn/id_concepts) at the California Digital Library).
+
+## 5. (Proposed) Integrity and Signing
+## 6. (Proposed) Packaging Collections

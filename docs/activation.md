@@ -48,4 +48,5 @@ The Activator is a reference implementation of the **activation** spec. This spe
 }
 ```
 
-##
+##Notes
+How should the runtime (native, or w/ runtime adapter interface) be given the full _service_ path?
