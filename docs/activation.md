@@ -23,13 +23,13 @@ This spec represents our recommendations on how to meet the following needs:
 
 This document is draft of a potential specification. It has no official standing of any kind and does not represent the support or consensus of any standards organisation.
 
-## 1. Conformance 
+# 1. Conformance 
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
 The key words *may*, must, must not, should, and should not are to be interpreted as described in [RFC2119].
 
-## 2. Terminology
+# 2. Terminology
 
 See [KOIO] for matching ontology terms....
 
@@ -39,31 +39,174 @@ A collection of metadata and binary files that together have a unique identifier
  
 #### Shelf:
 
+The Knowledge Grid provides repository capabilities using a abstraction called the "Shelf." KOs are added to and managed for storage and retrieval through the Shelf API. Different concrete implementations of physical storage for KOs are available and not all capabilities are implemented in every component. See [Shelf API](shelf-api.md).
+
 #### KO Endpoint:
-A service path exposed by a particular knowledge object. Takes the form `/naan/name/endpoint`
+A service path exposed by a particular knowledge object. Takes the form `/naan/name/endpoint`.
 
 #### Archival Resource Key (ARK):
+The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org) and top-level resolvers like [Name2Thing](http://www.n2t.net) and [Identifiers.org](http://www.identifiers.org). (Support for other identifiers like [DOI](http://www.doi.org)s is planned). 
 
 #### Manifest:
+A representation of a collection knowledge object resources. The *minimal* representation is an array of KO metadata JSON-LD objects with an `@id` property.
 
-#### Activate:
+#### Activation:
+THe process of deploying an implementation of a KO into a suitable runtime enviromnment in order to make the service endpoints (described in the service description available in the Activator API for use by client applications.
 
 #### Runtime
 
+An environment capable of running the code for a particular class of KOs. Runtimes may be embbeded in an (custom) Adapter, or may communicate with the Activator through a (custom) Native or Proxy Adapter. THe refence imlementation of the Activator ships with an embedded Javascrip-runtime Adapter; also see [Activator/Runtime deployment guide]()
+
 #### Adapter
 
+Adapters allow particular Runtimes to interact with the Activator in order to deploy and run the code from a KO. An Adapter may handle initialization and registration of a runtime, provide access to the overall activation context and active endpoints, route client requests to [KO Endpoints](), and shutdown. Adapters implement the Adapter interface. See [Developing Runtimes]() and the documentation for your specific Runtime/Adapter combination.   
 
+# 3. APIs
 ## Request API
 
+The Request API exposes the *micro*-API for the services provide by each KO. 
+
+##### Service Description
+
+```http request
+GET /kos/{naan}/{name}/sevice HTTP/1.1
+Accept: application/json
+```
+The OpenAPI 3 service description returned describes all the endpoints implemented by this KO.
+
+##### Request (for each endpoint)
+```
+POST /kos/{naan}/{name}/{endpoint} HTTP/1.1
+Accept: application/json
+Content-type: application/json
+
+{"age":48,"gender":"Female","risk":"low","sbp":120,"cholesterol":8,"smoker":false}
+```
+`Accept:` and `Content-type:` headers are required, and should be `application/json`
+
+(Proposed) Allow any mime-type specified in service description.
+
+##### Response:
+The response is wrapped in a JSON object. The actual KO result is available under the `result:` key.
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+{
+  "result": {
+    "cvdrisk": {
+      "total": 0.0026555542778455843,
+      "chd": 0.0017632437883150498,
+      "nonchd": 8.923104895305345E-4
+    }
+  },
+  "info": {
+    "ko": {
+      "@id": "score-calc",
+      "@type": "koio:KnowledgeObject",
+      "identifier": "ark:/score/calc",
+      "version": "v0.3.0",
+      "title": "Ten-year Fatal Cardiovascular Risk Calculation based on SCORE project (Example KO - Bundled with a npm package) ",
+      "description": "Estimating ten-year risk of fatal cardiovascular disease based on SCORE project. This version bundled the javascript code with externalized data files and a Node.js library of 'lodash'",
+      "keywords": [
+        "SCORE, ten-year",
+        "Cardiovascular risk",
+        "calculation"
+      ],
+      "hasServiceSpecification": "service.yaml",
+      "hasDeploymentSpecification": "service.yaml",
+      "hasPayload": "dist/main.js",
+      "@context": [
+        "http://kgrid.org/koio/contexts/knowledgeobject.jsonld"
+      ]
+    },
+    "inputs": {
+      "age": 48,
+      "gender": "Female",
+      "risk": "low",
+      "sbp": 120,
+      "cholesterol": 8,
+      "smoker": false
+    }
+  }
+}
+```
+
+(Proposed) Return KO output and link to provenance, tracing, etc. 
+Response code: HTTP/1.1 200
+
+##### Errors:
+A custom problem details resource is returned and the KO problem details or exception message will be included in the `Detail:` property.
+
+```
+{
+  "Status": "500 Internal Server Error",
+  "Instance": "uri=/score/calc/v0.3.0/score",
+  "Title": "Error",
+  "Time": "Fri Jun 19 16:21:23 UTC 2020",
+  "Detail": "JSON parse error: Unexpected character ('{' (code 123)): was..."
+}
+```
+
+(Proposed) Use [Problem Details for HTTP APIs — rfc7807](https://tools.ietf.org/html/rfc7807) and wrap any underlying KO response problem details.
+
+##### KO endpoint micro-APIs
+The KO micro-API should be completely specified by the OpenAPI 3 service description. Clients rely on the service to use the API.
+
+- Each KO endpoint must accept inputs as spec'ed by the service description for a specific mime-type. 
+- KO endpoints may do their own validation. They should not rely entirely on (proposed) Activator validation
+- Each KO endpoint must produce outputs as spec'ed by the service description for a specific mime-type. An output schema should be specificied. If not clients will have to handle outputs of arbitrary complexity.
+- If the knowledge object can't service the request it should use a well-defined scheme for responses (codes, error messages, etc.) The activator wraps KO error responses unchanged.
+- Individual KOs and endpoints must be stateless.
+- KOs may specifiy and use any properties in the deployment description depending on the particualr runtime.
+- Endpoint paths may be arbitrarly complex within the KO but must be unique.
+- Each KO may have multiple endpoints as long as the full path is unique.
 
 
-## Activation API (or is it just Loading?)
+## Activation API 
 
-??? 
+##### Endpoint resources
+`/endpoints`
 
-## Shelf API
+`/endpoints/{naan}/{name}`
 
-An Activator must implement at least the read-only portion of the [Shelf API](shelf-api.md). This includes listing KOs, returning representations of indivdual KOs (e.g. metadata only, with links to key components).
+`/endpoints/{naan}/{name}/{endpoint}`
+
+
+### Activation on startup
+
+##### Loading the shelf
+
+- If `kgrid.shelf.manifest` is set, the activator (shelf) will try to populate the shelf from the specified manifest(s).
+- Existing KOs on the shelf will not be deleted and may be overwritten.
+
+##### (Proposed) If `kgrid.activator.allowRuntimeImport` is `true`
+- While running the Activator packaged KO (zip file) can be uploaded to the `/kos` endpoint to add a KO to the shelf
+- While running the Activator a `manifest` (json or yaml) can be POSTed to the `/kos` endpoint to initiate loading of one or more KOs from an external path (See [Loading KOs onto the Shelf]() in the Kgrid Shelf documentation))
+
+> As KOs are added to the shelf, a warning is logged for each KO that is unreadable or malformed (e.g. missing `metadata.json` or deployment description)
+
+##### (Proposed) If `kgrid.activator.autoActivateOnStartup` is `true`
+> Currently behaves as if `kgrid.activator.autoActivateOnStartup` is `true` by default
+
+- On startup the Activator attempts to activated every KO on the shelf
+
+> Once a KO has been activated, any activated endpoints will remain functional even if the KO is deleted, unless or until the activation state is refreshed (using `/refresh` or `/refresh/{naan}/{name}`). Likewise new KOs added to the shelf will *NOT* be activated unless or until the activation state is refreshed (using `/refresh` or `/refresh/{naan}/{name}`).
+
+##### Runtime activation via `/refresh`
+- `/refresh` — all current activations are discarded and the startup activation sequencce tries to activate every KO on the shelf
+- `/refresh/{naan}/{name}` — all current activations for the default version given KO are discarded and the KO is reactivated 
+- `/refresh/{naan}/{name}/{version}` — all current activations for the given version KO are discarded and the KO is reactivated 
+
+##### On every activation
+- When a KO is activated, a warning is logged for every endpoint that cannot be activated
+- (verify) If two endpoints have identical coordinates (`/{naan}/{name}/{version}/{endpoint}`) the second endpoint will not be loaded and a warning will be logged. Compliant implementations must not allow multiple endpoints and must not have endpoint  unspecified request routing behavior.
+- Each activated endpoint is provided with a context object containing global activation properties and a means to resolve and access other endpoints in the same runtime or activator.
+
+
+## Shelf API (read-only)
+
+An Activator <span class="conformance">must</span> implement at least the read-only portion of the [Shelf API](shelf-api.md). This includes listing KOs, returning representations of indivdual KOs (e.g. metadata only, with links to key components).
 
 (Proposed) An activator must provide a resource representation for the knowledge object that includes activation status and endpoints.
 
@@ -80,7 +223,9 @@ An Activator must implement at least the read-only portion of the [Shelf API](sh
 GET /kos HTTP/1.1
 Accept: application/json
 ```
-Returns a list of knowledge object resources in a minimal representation
+Returns a list of knowledge object resources in a minimal representation.
+
+(Proposed) Returns a KO manifest
 
 ```
 HTTP/1.1 200

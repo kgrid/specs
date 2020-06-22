@@ -1,3 +1,7 @@
+---
+home:true
+---
+
 # Introduction
 
 This section is non-normative.
@@ -55,7 +59,7 @@ The key words may, must, must not, should, and should not are to be interpreted 
 See [KOIO] for matching ontology terms....
 
 #### Knowledge Object:
-A collection of metadata and binary files that together have a unique identifier (including version identifier). There are three required file types: a service description, a deployment description, and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. See [Activation Spec] for details of the roles of the these files.
+A collection of metadata and binary files that together have a unique identifier (including version identifier). There are three required file types: a service description, a deployment description, and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. See [Activation Spec](activation.md) for details of the roles of the these files.
 
 > KOIO term — koio:KnowledgeObject
 
