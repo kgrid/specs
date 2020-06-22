@@ -11,4 +11,4 @@ cd docs/.vuepress/dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f https://${GITHUB_TOKEN}@github.com/kgrid/guides.git master:gh-pages
+git push -f https://${GITHUB_TOKEN}@github.com/kgrid/specs.git master:gh-pages
