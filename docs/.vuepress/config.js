@@ -6,6 +6,7 @@ module.exports = {
     repo: 'kgrid/specs',
     lastUpdated: 'Last Updated',
     nav: [
+      { text: 'KGrid Specs', link:'/'},
       { text: 'KGrid.org', link: 'https://kgrid.org' },
       { text: 'KGrid Common Package', link: '/packaging.md' },
       { text: 'Activation', link: '/activation.md' },
