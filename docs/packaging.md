@@ -1,7 +1,3 @@
----
-home:true
----
-
 # Introduction
 
 This section is non-normative.
@@ -195,7 +191,7 @@ Must describe each endpoint that the service implements. Each endpoint must corr
 ##### Properties required by Activator
 - `endpoints` (Required) Is the map of service paths to deployment information for that path.
 - `/<endpoint path>` (Required) These are the paths for each endpoint.
-    - `adapter` (Required, will be deprecated soon) specifies which adapter the activator should use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](./runtime-adapter.md)
+    - `adapter` (Required, will be deprecated soon) specifies which adapter the activator should use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](docs/runtimes.md)
     - `engine` The runtime that this Knowledge Object needs to be activated in.
 ##### Properties required by Runtimes
 - `artifact` (Required) An array pointing to each artifact this endpoint depends upon. These artifacts are loaded by a runtime at the time of activation. These paths are relative to the Deployment Description.
