@@ -27,7 +27,7 @@ This document is draft of a potential specification. It has no official standing
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-The key words *may*, must, must not, should, and should not are to be interpreted as described in [RFC2119].
+The key words <conform>may</conform>, <conform>must</conform>, <conform>must not</conform>, <conform>should</conform>, and <conform>should not</conform> are to be interpreted as described in [RFC2119].
 
 # 2. Terminology
 
@@ -55,11 +55,11 @@ THe process of deploying an implementation of a KO into a suitable runtime envir
 
 #### Runtime
 
-An environment capable of running the code for a particular class of KOs. Runtimes may be embbeded in an (custom) Adapter, or may communicate with the Activator through a (custom) Native or Proxy Adapter. THe refence imlementation of the Activator ships with an embedded Javascrip-runtime Adapter; also see [Activator/Runtime deployment guide]()
+An environment capable of running the code for a particular class of KOs. Runtimes <conform>may</conform> be embbeded in an (custom) Adapter, or <conform>may</conform> communicate with the Activator through a (custom) Native or Proxy Adapter. THe refence imlementation of the Activator ships with an embedded Javascrip-runtime Adapter; also see [Activator/Runtime deployment guide]()
 
 #### Adapter
 
-Adapters allow particular Runtimes to interact with the Activator in order to deploy and run the code from a KO. An Adapter may handle initialization and registration of a runtime, provide access to the overall activation context and active endpoints, route client requests to [KO Endpoints](), and shutdown. Adapters implement the Adapter interface. See [Developing Runtimes]() and the documentation for your specific Runtime/Adapter combination.   
+Adapters allow particular Runtimes to interact with the Activator in order to deploy and run the code from a KO. An Adapter <conform>may</conform> handle initialization and registration of a runtime, provide access to the overall activation context and active endpoints, route client requests to [KO Endpoints](), and shutdown. Adapters implement the Adapter interface. See [Developing Runtimes]() and the documentation for your specific Runtime/Adapter combination.   
 
 # 3. APIs
 ## Request API
@@ -82,7 +82,7 @@ Content-type: application/json
 
 {"age":48,"gender":"Female","risk":"low","sbp":120,"cholesterol":8,"smoker":false}
 ```
-`Accept:` and `Content-type:` headers are required, and should be `application/json`
+`Accept:` and `Content-type:` headers are required, and <conform>should</conform> be `application/json`
 
 (Proposed) Allow any mime-type specified in service description.
 
@@ -151,16 +151,16 @@ A custom problem details resource is returned and the KO problem details or exce
 (Proposed) Use [Problem Details for HTTP APIs — rfc7807](https://tools.ietf.org/html/rfc7807) and wrap any underlying KO response problem details.
 
 ##### KO endpoint micro-APIs
-The KO micro-API should be completely specified by the OpenAPI 3 service description. Clients rely on the service to use the API.
+The KO micro-API <conform>should</conform> be completely specified by the OpenAPI 3 service description. Clients rely on the service to use the API.
 
-- Each KO endpoint must accept inputs as spec'ed by the service description for a specific mime-type. 
-- KO endpoints may do their own validation. They should not rely entirely on (proposed) Activator validation
-- Each KO endpoint must produce outputs as spec'ed by the service description for a specific mime-type. An output schema should be specificied. If not clients will have to handle outputs of arbitrary complexity.
-- If the knowledge object can't service the request it should use a well-defined scheme for responses (codes, error messages, etc.) The activator wraps KO error responses unchanged.
-- Individual KOs and endpoints must be stateless.
-- KOs may specifiy and use any properties in the deployment description depending on the particualr runtime.
-- Endpoint paths may be arbitrarly complex within the KO but must be unique.
-- Each KO may have multiple endpoints as long as the full path is unique.
+- Each KO endpoint <conform>must</conform> accept inputs as spec'ed by the service description for a specific mime-type. 
+- KO endpoints <conform>may</conform> do their own validation. They <conform>should</conform> not rely entirely on (proposed) Activator validation
+- Each KO endpoint <conform>must</conform> produce outputs as spec'ed by the service description for a specific mime-type. An output schema <conform>should</conform> be specificied. If not clients will have to handle outputs of arbitrary complexity.
+- If the knowledge object can't service the request it <conform>should</conform> use a well-defined scheme for responses (codes, error messages, etc.) The activator wraps KO error responses unchanged.
+- Individual KOs and endpoints <conform>must</conform> be stateless.
+- KOs <conform>may</conform> specifiy and use any properties in the deployment description depending on the particualr runtime.
+- Endpoint paths <conform>may</conform> be arbitrarly complex within the KO but <conform>must</conform> be unique.
+- Each KO <conform>may</conform> have multiple endpoints as long as the full path is unique.
 
 
 ## Activation API 
@@ -178,7 +178,7 @@ The KO micro-API should be completely specified by the OpenAPI 3 service descrip
 ##### Loading the shelf
 
 - If `kgrid.shelf.manifest` is set, the activator (shelf) will try to populate the shelf from the specified manifest(s).
-- Existing KOs on the shelf will not be deleted and may be overwritten.
+- Existing KOs on the shelf will not be deleted and <conform>may</conform> be overwritten.
 
 ##### (Proposed) If `kgrid.activator.allowRuntimeImport` is `true`
 - While running the Activator packaged KO (zip file) can be uploaded to the `/kos` endpoint to add a KO to the shelf
@@ -200,23 +200,23 @@ The KO micro-API should be completely specified by the OpenAPI 3 service descrip
 
 ##### On every activation
 - When a KO is activated, a warning is logged for every endpoint that cannot be activated
-- (verify) If two endpoints have identical coordinates (`/{naan}/{name}/{version}/{endpoint}`) the second endpoint will not be loaded and a warning will be logged. Compliant implementations must not allow multiple endpoints and must not have endpoint  unspecified request routing behavior.
+- (verify) If two endpoints have identical coordinates (`/{naan}/{name}/{version}/{endpoint}`) the second endpoint will not be loaded and a warning will be logged. Compliant implementations <conform>must not</conform> allow multiple endpoints and <conform>must not</conform> have endpoint  unspecified request routing behavior.
 - Each activated endpoint is provided with a context object containing global activation properties and a means to resolve and access other endpoints in the same runtime or activator.
 
 
 ## Shelf API (read-only)
 
-An Activator <span class="conformance">must</span> implement at least the read-only portion of the [Shelf API](shelf-api.md). This includes listing KOs, returning representations of indivdual KOs (e.g. metadata only, with links to key components).
+An Activator <conform>must</conform> implement at least the read-only portion of the [Shelf API](shelf-api.md). This includes listing KOs, returning representations of indivdual KOs (e.g. metadata only, with links to key components).
 
-(Proposed) An activator must provide a resource representation for the knowledge object that includes activation status and endpoints.
+(Proposed) An activator <conform>must</conform> provide a resource representation for the knowledge object that includes activation status and endpoints.
 
-(Proposed) An Activator should make available the service description for a knowledge object. 
+(Proposed) An Activator <conform>should</conform> make available the service description for a knowledge object. 
 
-(Proposed) Access to the internals of the KO (deployment and payload files) should not be exposed, except that KOs of "resource" type may specify particular payloads for client access under appropriate service paths in the service description.
+(Proposed) Access to the internals of the KO (deployment and payload files) <conform>should not</conform> be exposed, except that KOs of "resource" type <conform>may</conform> specify particular payloads for client access under appropriate service paths in the service description.
 
-(Proposed) An activator may implement additional operations for the Shelf API to support development or demonstration of KOs. For example, uploading or importing KOs, loading KOs from a manifest file, deleting KOs. See [Shelf API](shelf-api.md) for more info.
+(Proposed) An activator <conform>may</conform> implement additional operations for the Shelf API to support development or demonstration of KOs. For example, uploading or importing KOs, loading KOs from a manifest file, deleting KOs. See [Shelf API](shelf-api.md) for more info.
 
-(Proposed) It is especially useful for Activators used in protyping and demonstration to allow a manfifest to be posted to the activator in prder to load KOs at runtime. This should not be enabled by default except in development environments as it representas an vulnberabiltiy.
+(Proposed) It is especially useful for Activators used in protyping and demonstration to allow a manfifest to be posted to the activator in prder to load KOs at runtime. This <conform>should not</conform> be enabled by default except in development environments as it representas an vulnberabiltiy.
 
 ### List KO resources
 ```
@@ -270,15 +270,15 @@ Content-Type: application/json
 ```
 
 ## Application and Health Information
-Activators should provide application and health information via `/health` and `/info` endpoints. 
+Activators <conform>should</conform> provide application and health information via `/health` and `/info` endpoints. 
 
 ### `/health` (Required)
 
-The health enpoint must provide a `{ "status": "<UP|DOWN>" } response at a minimum. The `/health` endpoint should  indicate the status of individual components (adapters, shelf cdo store, runtimes, KOs and their activation status) to aid montioring in troubleshooting Activator deployments.
+The health enpoint <conform>must</conform> provide a `{ "status": "<UP|DOWN>" } response at a minimum. The `/health` endpoint <conform>should</conform>  indicate the status of individual components (adapters, shelf cdo store, runtimes, KOs and their activation status) to aid montioring in troubleshooting Activator deployments.
 
 We suggest following the conventions in the [Spring Boot production health information guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready-health). 
 
-Health information should focus on details that help understand wy the Activator or a component is `up` or `down`. Extended information may be made available under an `/info` endpoint. See `/info` below.
+Health information <conform>should</conform> focus on details that help understand wy the Activator or a component is `up` or `down`. Extended information <conform>may</conform> be made available under an `/info` endpoint. See `/info` below.
 
 ```
 GET /health HTTP/1.1
@@ -337,7 +337,7 @@ Content-type: application/json
       ...
 }
 ```
-An Activator implementation may use additional statuses as needed which can be documented for deployers, etc.
+An Activator implementation <conform>may</conform> use additional statuses as needed which can be documented for deployers, etc.
 
 ### `/info` (Optional)
 
@@ -345,9 +345,9 @@ Additional or extended information about the opertating characteristics of the A
 
 We suggest that implementations provide things like a list of adapters and runtimes currently deployed, as well as counts or lists of KOs available to the Activator, endpoints activated, perhaps total requests, uptime, build information, key environemnt variables, etc.
 
-Be careful not to expose sensitive information. The `/health` and `/info` endpoints should be secured (e.g. with OAuth 2.0 Bearer Tokens).
+Be careful not to expose sensitive information. The `/health` and `/info` endpoints <conform>should</conform> be secured (e.g. with OAuth 2.0 Bearer Tokens).
 
-The `/info` endpoint should return a map of information sets in JSON or YAML.
+The `/info` endpoint <conform>should</conform> return a map of information sets in JSON or YAML.
 
 
 ##Notes

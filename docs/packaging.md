@@ -48,7 +48,7 @@ This document is draft of a potential specification. It has no official standing
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-The key words may, must, must not, should, and should not are to be interpreted as described in [RFC2119].
+The key words <conform>may</conform>, <conform>must</conform>, <conform>must not</conform>, <conform>should</conform>, and <conform>should not</conform> are to be interpreted as described in [RFC2119].
 
 ## 2. Terminology
 
@@ -76,16 +76,16 @@ The service provides an API version, list of endpoints, schemas for inputs and o
 A deployment descriptor  (DD) refers to a configuration file for an artifact that is deployed to some container/engine. 
 
 In the Knowledge Grid, a deployment descriptor:
-- _should_ identify a suitable runtime for the payload(s) associated with a particular endpoint. 
-- _may_ also provide information to a runtime adapter about the deployment (a list of data files). These properties may be runtime specific.
-- _may_ point to other artifacts used by the runtime for deployment (e.g. a Docker file)
-- _must_ be a json or yaml file with an `"runtime"` key and an `"endpoints array of 
+- <conform>should</conform> identify a suitable runtime for the payload(s) associated with a particular endpoint. 
+- <conform>may</conform> also provide information to a runtime adapter about the deployment (a list of data files). These properties <conform>may</conform> be runtime specific.
+- <conform>may</conform> point to other artifacts used by the runtime for deployment (e.g. a Docker file)
+- <conform>must</conform> be a json or yaml file with an `"runtime"` key and an `"endpoints array of 
 
 > DeploymentInstruction = def., an InformationArtifact that describes how to deploy a KnowledgeObject in the Knowledge Grid platform
 
 #### Metadata
 
-Metadata describing the structure and elements of the KO is contained in JSON or YAML files named according to the following scheme.... At a minimum administrative metadata should include... and structural metadata should follow the KOIO, and must be in a file named `metadata.json`. See [Conceptual KO]().
+Metadata describing the structure and elements of the KO is contained in JSON or YAML files named according to the following scheme.... At a minimum administrative metadata <conform>should</conform> include... and structural metadata <conform>should</conform> follow the KOIO, and <conform>must</conform> be in a file named `metadata.json`. See [Conceptual KO]().
 
 #### Implementation Version and API version
 
@@ -93,7 +93,7 @@ The implementation version, with the ARK (or other persistent unique ID), unique
 
 #### Endpoint
 
-An endpoint represents a particular service offered by the KO (See #Service Description, above). Payloads may be organized to implement each payload separately or may be grouped together in Payload files. See [Activation spec]()
+An endpoint represents a particular service offered by the KO (See #Service Description, above). Payloads <conform>may</conform> be organized to implement each payload separately or <conform>may</conform> be grouped together in Payload files. See [Activation spec]()
 
 #### Payload
 
@@ -144,11 +144,11 @@ The metadata.json file contains the structural description of the object
 - `@type` Setting this to `"koio:KnowledgeObject"` is what declares this as a Knowledge Object. The Knowledge Grid depends on this when determining whether something is a Knowledge Object.
 - `@context`  is used to map koio terms to IRIs (along with other terms). Contexts can either be directly embedded into the document (an embedded context) or be referenced using a URL. Please use the koio context url: http://kgrid.org/koio/contexts/knowledgeobject.jsonld
     - See [The Context](https://www.w3.org/TR/json-ld/#the-context) section of json-ld syntax
-- `koio:packagingVersion` The metadata file must contain a koio packaging version corresponding to the version of this specification that the object follows.
-- `additional descriptive and administrative metadata` we recommend using existing schemas and vocabularies (i.e. Dublin Core, etc.) when adding metadata. Some additional metadata may be required by particular implementations of Knowledge Grid components or institutional policies.
+- `koio:packagingVersion` The metadata file <conform>must</conform> contain a koio packaging version corresponding to the version of this specification that the object follows.
+- `additional descriptive and administrative metadata` we recommend using existing schemas and vocabularies (i.e. Dublin Core, etc.) when adding metadata. Some additional metadata <conform>may</conform> be required by particular implementations of Knowledge Grid components or institutional policies.
 
 #### Parts of a knowledge object (Structural Data)
-- `koio:additionalMetadata` (Proposed) an array of paths for any other metadata files that may have been created for this object.
+- `koio:additionalMetadata` (Proposed) an array of paths for any other metadata files that <conform>may</conform> have been created for this object.
 - `koio:hasService` the path to the service description file in this Knowledge Object
 - `koio:hasDeployment` the path to the deployment description file in this Knowledge Object
 - `koio:hasPayload` an array of paths to files in the executable payload.
@@ -156,12 +156,12 @@ The metadata.json file contains the structural description of the object
 - `koio:hasPayloadManifest` (Proposed) a path to a manifest file that describes the files in the payload.
 
 ### Service Description
-The Service Description is an [OpenAPI 3](http://spec.openapis.org/oas/v3.0.3) document that describes the services (endpoints) implemented by the knowledge object. Each path should correspond to an element in the Deployment Descriptor (which describes the implementation of the endpoint). Each path should describe the request and response characteristics of the endpoint exposed by the API.
-- The OpenAPI Server endpoint should use a relative URL that matches the knowledge object identifier. (URLs are relative to the server the service.yaml was fetched from; `servers` element should point to `/naan/name`).
+The Service Description is an [OpenAPI 3](http://spec.openapis.org/oas/v3.0.3) document that describes the services (endpoints) implemented by the knowledge object. Each path <conform>should</conform> correspond to an element in the Deployment Descriptor (which describes the implementation of the endpoint). Each path <conform>should</conform> describe the request and response characteristics of the endpoint exposed by the API.
+- The OpenAPI Server endpoint <conform>should</conform> use a relative URL that matches the knowledge object identifier. (URLs are relative to the server the service.yaml was fetched from; `servers` element <conform>should</conform> point to `/naan/name`).
 - Has an API version, NOT a code version
-- Should describe the schemas for the inputs and outputs
+- <conform>should</conform> describe the schemas for the inputs and outputs
 - Add `x-kgrid-activation` for each path with deployment information (deprecated in favor of Deployment Description)
-- Service paths may be multi-level (e.g. `/welcome/hello/howdy`)
+- Service paths <conform>may</conform> be multi-level (e.g. `/welcome/hello/howdy`)
 
 ### Deployment Description
 ```
@@ -184,14 +184,14 @@ endpoints:
       entry: 'src/GoodBye.java'
       function: 'main'
 ```
-Must describe each endpoint that the service implements. Each endpoint must correspond to one in the Service Description. Should be a linked data resource.
-- Must have an `id` field that can be resolved to the KO on the shelf.
+<conform>must</conform> describe each endpoint that the service implements. Each endpoint <conform>must</conform> correspond to one in the Service Description. <conform>should</conform> be a linked data resource.
+- <conform>must</conform> have an `id` field that can be resolved to the KO on the shelf.
 - Uses the same identifiers (currently ARK) as other kgrid components.
 
 ##### Properties required by Activator
 - `endpoints` (Required) Is the map of service paths to deployment information for that path.
 - `/<endpoint path>` (Required) These are the paths for each endpoint.
-    - `adapter` (Required, will be deprecated soon) specifies which adapter the activator should use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](docs/runtimes.md)
+    - `adapter` (Required, will be deprecated soon) specifies which adapter the activator <conform>should</conform> use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](docs/runtimes.md)
     - `engine` The runtime that this Knowledge Object needs to be activated in.
 ##### Properties required by Runtimes
 - `artifact` (Required) An array pointing to each artifact this endpoint depends upon. These artifacts are loaded by a runtime at the time of activation. These paths are relative to the Deployment Description.
@@ -200,25 +200,25 @@ Must describe each endpoint that the service implements. Each endpoint must corr
     
 ### Payload Files
 The files related to the implementation of the services that this Knowledge Object provides. 
-- Can be in a directory, or all at top level, and should be referenced by the Metadata.json in the `hasPayload` element. 
+- Can be in a directory, or all at top level, and <conform>should</conform> be referenced by the Metadata.json in the `hasPayload` element. 
 - Payload files listed in the `hasPayload` element are useful for object browsing in libraries, signing, diffing two objects, etc. (The specification of payload objects is currently under development).
-- Payload files may be human or machine readable and of any type.
+- Payload files <conform>may</conform> be human or machine readable and of any type.
 - Payload files are limited in size only by the limits of the operating system. 
 - There is no limit to the number of payload files. 
-- Payload files should be organized in a way that is natural for the code that implements the service.
+- Payload files <conform>should</conform> be organized in a way that is natural for the code that implements the service.
 
 ##### Payload Manifest File (Proposed)
 A json or yaml file that lists payload files in the same format that is used by `hasPayload` in metadata.json. Absolute or relative references are accepted. 
 ### Additional Metadata (Proposed)
-Any additional files containing information that may be useful to those using this Knowledge Object. For example, linking CBK with supporting/corroborative sources, incl. provenance and additional domain and other descriptive metadata (is extensible).
+Any additional files containing information that <conform>may</conform> be useful to those using this Knowledge Object. For example, linking CBK with supporting/corroborative sources, incl. provenance and additional domain and other descriptive metadata (is extensible).
 
 ## 4. Versioning 
 - both resource and service; e.g. artifact and API versioning
-- Should use semantic versioning, but may use a versioning scheme appropriate for the particular knowledge domain.
-- Service API versions may change less often than code versions.
-- (Proposed) Multiple versions of the same object may be packaged together as a knowledge object collection.
-- API version (in Service Description: OpenAPI 3 version element) and code version (in metadata.json) do not have to be in sync, but KO developers should consider incrementing the API patch version when releasing new versions of an object even if the API did not change.
-- (Proposed) Version strings should be added to the identifier as a qualifier for the ARK (See "ARK Anatomy" section of [ARK docs](https://n2t.net/e/ark_ids.html) as well as "Base Identifier Extensions" in [Identifier Concepts and Practices](https://ezid.cdlib.org/learn/id_concepts) at the California Digital Library).
+- <conform>should</conform> use semantic versioning, but <conform>may</conform> use a versioning scheme appropriate for the particular knowledge domain.
+- Service API versions <conform>may</conform> change less often than code versions.
+- (Proposed) Multiple versions of the same object <conform>may</conform> be packaged together as a knowledge object collection.
+- API version (in Service Description: OpenAPI 3 version element) and code version (in metadata.json) do not have to be in sync, but KO developers <conform>should</conform> consider incrementing the API patch version when releasing new versions of an object even if the API did not change.
+- (Proposed) Version strings <conform>should</conform> be added to the identifier as a qualifier for the ARK (See "ARK Anatomy" section of [ARK docs](https://n2t.net/e/ark_ids.html) as well as "Base Identifier Extensions" in [Identifier Concepts and Practices](https://ezid.cdlib.org/learn/id_concepts) at the California Digital Library).
 
 ## 5. (Proposed) Integrity and Signing
 ## 6. (Proposed) Packaging Collections

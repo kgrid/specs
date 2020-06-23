@@ -18,7 +18,7 @@ This document is draft of a potential specification. It has no official standing
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-The key words *may*, must, must not, should, and should not are to be interpreted as described in [RFC2119].
+The key words <conform>may</conform>, <conform>must</conform>, <conform>must not</conform>, <conform>should</conform>, and <conform>should not</conform> are to be interpreted as described in [RFC2119].
 
 ## 2. Terminology
 
