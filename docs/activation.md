@@ -84,7 +84,7 @@ Content-type: application/json
 ```
 `Accept:` and `Content-type:` headers are required, and <conform>should</conform> be `application/json`
 
-(Proposed) Allow any mime-type specified in service description.
+<proposed>(proposed)</proposed> Allow any mime-type specified in service description.
 
 ##### Response:
 The response is wrapped in a JSON object. The actual KO result is available under the `result:` key.
@@ -132,7 +132,7 @@ Content-type: application/json
 }
 ```
 
-(Proposed) Return KO output and link to provenance, tracing, etc. 
+<proposed>(proposed)</proposed> Return KO output and link to provenance, tracing, etc. 
 Response code: HTTP/1.1 200
 
 ##### Errors:
@@ -148,13 +148,13 @@ A custom problem details resource is returned and the KO problem details or exce
 }
 ```
 
-(Proposed) Use [Problem Details for HTTP APIs — rfc7807](https://tools.ietf.org/html/rfc7807) and wrap any underlying KO response problem details.
+<proposed>(proposed)</proposed> Use [Problem Details for HTTP APIs — rfc7807](https://tools.ietf.org/html/rfc7807) and wrap any underlying KO response problem details.
 
 ##### KO endpoint micro-APIs
 The KO micro-API <conform>should</conform> be completely specified by the OpenAPI 3 service description. Clients rely on the service to use the API.
 
 - Each KO endpoint <conform>must</conform> accept inputs as spec'ed by the service description for a specific mime-type. 
-- KO endpoints <conform>may</conform> do their own validation. They <conform>should</conform> not rely entirely on (proposed) Activator validation
+- KO endpoints <conform>may</conform> do their own validation. They <conform>should</conform> not rely entirely on <proposed>(proposed)</proposed> Activator validation
 - Each KO endpoint <conform>must</conform> produce outputs as spec'ed by the service description for a specific mime-type. An output schema <conform>should</conform> be specificied. If not clients will have to handle outputs of arbitrary complexity.
 - If the knowledge object can't service the request it <conform>should</conform> use a well-defined scheme for responses (codes, error messages, etc.) The activator wraps KO error responses unchanged.
 - Individual KOs and endpoints <conform>must</conform> be stateless.
@@ -180,13 +180,13 @@ The KO micro-API <conform>should</conform> be completely specified by the OpenAP
 - If `kgrid.shelf.manifest` is set, the activator (shelf) will try to populate the shelf from the specified manifest(s).
 - Existing KOs on the shelf will not be deleted and <conform>may</conform> be overwritten.
 
-##### (Proposed) If `kgrid.activator.allowRuntimeImport` is `true`
+##### <proposed>(proposed)</proposed> If `kgrid.activator.allowRuntimeImport` is `true`
 - While running the Activator packaged KO (zip file) can be uploaded to the `/kos` endpoint to add a KO to the shelf
 - While running the Activator a `manifest` (json or yaml) can be POSTed to the `/kos` endpoint to initiate loading of one or more KOs from an external path (See [Loading KOs onto the Shelf]() in the Kgrid Shelf documentation))
 
 > As KOs are added to the shelf, a warning is logged for each KO that is unreadable or malformed (e.g. missing `metadata.json` or deployment description)
 
-##### (Proposed) If `kgrid.activator.autoActivateOnStartup` is `true`
+##### <proposed>(proposed)</proposed> If `kgrid.activator.autoActivateOnStartup` is `true`
 > Currently behaves as if `kgrid.activator.autoActivateOnStartup` is `true` by default
 
 - On startup the Activator attempts to activated every KO on the shelf
@@ -208,15 +208,15 @@ The KO micro-API <conform>should</conform> be completely specified by the OpenAP
 
 An Activator <conform>must</conform> implement at least the read-only portion of the [Shelf API](shelf-api.md). This includes listing KOs, returning representations of indivdual KOs (e.g. metadata only, with links to key components).
 
-(Proposed) An activator <conform>must</conform> provide a resource representation for the knowledge object that includes activation status and endpoints.
+<proposed>(proposed)</proposed> An activator <conform>must</conform> provide a resource representation for the knowledge object that includes activation status and endpoints.
 
-(Proposed) An Activator <conform>should</conform> make available the service description for a knowledge object. 
+<proposed>(proposed)</proposed> An Activator <conform>should</conform> make available the service description for a knowledge object. 
 
-(Proposed) Access to the internals of the KO (deployment and payload files) <conform>should not</conform> be exposed, except that KOs of "resource" type <conform>may</conform> specify particular payloads for client access under appropriate service paths in the service description.
+<proposed>(proposed)</proposed> Access to the internals of the KO (deployment and payload files) <conform>should not</conform> be exposed, except that KOs of "resource" type <conform>may</conform> specify particular payloads for client access under appropriate service paths in the service description.
 
-(Proposed) An activator <conform>may</conform> implement additional operations for the Shelf API to support development or demonstration of KOs. For example, uploading or importing KOs, loading KOs from a manifest file, deleting KOs. See [Shelf API](shelf-api.md) for more info.
+<proposed>(proposed)</proposed> An activator <conform>may</conform> implement additional operations for the Shelf API to support development or demonstration of KOs. For example, uploading or importing KOs, loading KOs from a manifest file, deleting KOs. See [Shelf API](shelf-api.md) for more info.
 
-(Proposed) It is especially useful for Activators used in protyping and demonstration to allow a manfifest to be posted to the activator in prder to load KOs at runtime. This <conform>should not</conform> be enabled by default except in development environments as it representas an vulnberabiltiy.
+<proposed>(proposed)</proposed> It is especially useful for Activators used in protyping and demonstration to allow a manfifest to be posted to the activator in prder to load KOs at runtime. This <conform>should not</conform> be enabled by default except in development environments as it representas an vulnberabiltiy.
 
 ### List KO resources
 ```
@@ -225,7 +225,7 @@ Accept: application/json
 ```
 Returns a list of knowledge object resources in a minimal representation.
 
-(Proposed) Returns a KO manifest
+<proposed>(proposed)</proposed> Returns a KO manifest
 
 ```
 HTTP/1.1 200

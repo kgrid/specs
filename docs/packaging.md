@@ -148,19 +148,19 @@ The metadata.json file contains the structural description of the object
 - `additional descriptive and administrative metadata` we recommend using existing schemas and vocabularies (i.e. Dublin Core, etc.) when adding metadata. Some additional metadata <conform>may</conform> be required by particular implementations of Knowledge Grid components or institutional policies.
 
 #### Parts of a knowledge object (Structural Data)
-- `koio:additionalMetadata` (Proposed) an array of paths for any other metadata files that <conform>may</conform> have been created for this object.
+- `koio:additionalMetadata` <proposed>(proposed)</proposed> an array of paths for any other metadata files that <conform>may</conform> have been created for this object.
 - `koio:hasService` the path to the service description file in this Knowledge Object
 - `koio:hasDeployment` the path to the deployment description file in this Knowledge Object
 - `koio:hasPayload` an array of paths to files in the executable payload.
-- `koio:hasPayloadContainer` (Proposed) a path to the directory containing payload files
-- `koio:hasPayloadManifest` (Proposed) a path to a manifest file that describes the files in the payload.
+- `koio:hasPayloadContainer` <proposed>(proposed)</proposed> a path to the directory containing payload files
+- `koio:hasPayloadManifest` <proposed>(proposed)</proposed> a path to a manifest file that describes the files in the payload.
 
 ### Service Description
 The Service Description is an [OpenAPI 3](http://spec.openapis.org/oas/v3.0.3) document that describes the services (endpoints) implemented by the knowledge object. Each path <conform>should</conform> correspond to an element in the Deployment Descriptor (which describes the implementation of the endpoint). Each path <conform>should</conform> describe the request and response characteristics of the endpoint exposed by the API.
 - The OpenAPI Server endpoint <conform>should</conform> use a relative URL that matches the knowledge object identifier. (URLs are relative to the server the service.yaml was fetched from; `servers` element <conform>should</conform> point to `/naan/name`).
 - Has an API version, NOT a code version
 - <conform>should</conform> describe the schemas for the inputs and outputs
-- Add `x-kgrid-activation` for each path with deployment information (deprecated in favor of Deployment Description)
+- Add `x-kgrid-activation` for each path with deployment information (<deprecated>deprecated</deprecated> in favor of Deployment Description)
 - Service paths <conform>may</conform> be multi-level (e.g. `/welcome/hello/howdy`)
 
 ### Deployment Description
@@ -191,7 +191,7 @@ endpoints:
 ##### Properties required by Activator
 - `endpoints` (Required) Is the map of service paths to deployment information for that path.
 - `/<endpoint path>` (Required) These are the paths for each endpoint.
-    - `adapter` (Required, will be deprecated soon) specifies which adapter the activator <conform>should</conform> use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](docs/runtimes.md)
+    - `adapter` (Required, will be <deprecated>deprecated</deprecated> soon) specifies which adapter the activator <conform>should</conform> use to manage activation with the appropriate runtime. Currently can be `JAVASCRIPT` or `PROXY`. See [Runtime Adapters](docs/runtimes.md)
     - `engine` The runtime that this Knowledge Object needs to be activated in.
 ##### Properties required by Runtimes
 - `artifact` (Required) An array pointing to each artifact this endpoint depends upon. These artifacts are loaded by a runtime at the time of activation. These paths are relative to the Deployment Description.
@@ -207,18 +207,18 @@ The files related to the implementation of the services that this Knowledge Obje
 - There is no limit to the number of payload files. 
 - Payload files <conform>should</conform> be organized in a way that is natural for the code that implements the service.
 
-##### Payload Manifest File (Proposed)
+##### Payload Manifest File <proposed>(proposed)</proposed>
 A json or yaml file that lists payload files in the same format that is used by `hasPayload` in metadata.json. Absolute or relative references are accepted. 
-### Additional Metadata (Proposed)
+### Additional Metadata <proposed>(proposed)</proposed>
 Any additional files containing information that <conform>may</conform> be useful to those using this Knowledge Object. For example, linking CBK with supporting/corroborative sources, incl. provenance and additional domain and other descriptive metadata (is extensible).
 
 ## 4. Versioning 
 - both resource and service; e.g. artifact and API versioning
 - <conform>should</conform> use semantic versioning, but <conform>may</conform> use a versioning scheme appropriate for the particular knowledge domain.
 - Service API versions <conform>may</conform> change less often than code versions.
-- (Proposed) Multiple versions of the same object <conform>may</conform> be packaged together as a knowledge object collection.
+- <proposed>(proposed)</proposed> Multiple versions of the same object <conform>may</conform> be packaged together as a knowledge object collection.
 - API version (in Service Description: OpenAPI 3 version element) and code version (in metadata.json) do not have to be in sync, but KO developers <conform>should</conform> consider incrementing the API patch version when releasing new versions of an object even if the API did not change.
-- (Proposed) Version strings <conform>should</conform> be added to the identifier as a qualifier for the ARK (See "ARK Anatomy" section of [ARK docs](https://n2t.net/e/ark_ids.html) as well as "Base Identifier Extensions" in [Identifier Concepts and Practices](https://ezid.cdlib.org/learn/id_concepts) at the California Digital Library).
+- <proposed>(proposed)</proposed> Version strings <conform>should</conform> be added to the identifier as a qualifier for the ARK (See "ARK Anatomy" section of [ARK docs](https://n2t.net/e/ark_ids.html) as well as "Base Identifier Extensions" in [Identifier Concepts and Practices](https://ezid.cdlib.org/learn/id_concepts) at the California Digital Library).
 
-## 5. (Proposed) Integrity and Signing
-## 6. (Proposed) Packaging Collections
+## 5. <proposed>(proposed)</proposed> Integrity and Signing
+## 6. <proposed>(proposed)</proposed> Packaging Collections
