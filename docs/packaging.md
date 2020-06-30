@@ -1,8 +1,26 @@
-# Introduction
+# Knowledge Grid Commom Object Package specifications
+
+## Introduction
 
 This section is non-normative.
 
 This Knowledge Object Common Packaging (KOCP) specification describes an application-independent approach to the storage of computable knowledge objects in a structured, transparent, and predictable manner. The KOCP spec is suitable for serialization and distribution of KOs. It is also the native dissemination and submission package for the Library component of Knowledge Grid (import/export). It also acts as the activatable/runnable package for the Activator component of the Knowledge Grid.
+
+
+## Overview
+
+
+Note: the section previously in `index.md`
+
+
+Compliant Knowledge Grid components produce, consume and manage computable biomedical knowledge [CBK]. CBK that conforms to a specific conceptual model, the KGrid Common Object Model [KCOM], seeks to satisfy the following goals:
+- When knowledge is externalized (as a resource) it is far more findable, accessible, and significantly easier to manage in scalable information systems
+- When CBK is characterized by what it does (as a service), it is far more interoperable and reusable at the point of practice
+- When CBK is *both* externalized as a resource *and* characterized as a service it can participate in all phases of the research,  translational, clinical, and operational lifecycle far more easily, at a reduced cost, with more rapid adoption, and with higher degree of trust.
+
+The KGrid Common Object Package [KCOP] provides a standard way to package a collection of artifacts representing an implementation of CBK as both a managed resource and a deployable service, including code, appropriate metadata, and standards-compliant supporting artifacts.
+
+CBK packaged according to the KCOP, and designed to meet the standard described in the KGrid Common Activation spec [KCA] for CBK services, will interoperate with any compliant system.
 
 
 ## Purpose
@@ -25,12 +43,12 @@ To allow computable knowledge to be externalized and expressed as services
 
 #### Interoperability
 
-##### To interoperate with existing repositories 
+##### To interoperate with existing repositories
 
 ##### To interoperate with a variety of runtime/deployment environments
 
 #### Semantic Richness
-Both for computation and domain concerns, semantic web ready. Open API, LDP, Dublin core, KOIO, 
+Both for computation and domain concerns, semantic web ready. Open API, LDP, Dublin core, KOIO,
 
 #### Versioning
 
@@ -44,7 +62,7 @@ Robustness, certification, verifiability, provenance, suitability, reputation.
 
 This document is draft of a potential specification. It has no official standing of any kind and does not represent the support or consensus of any standards organisation.
 
-## 1. Conformance 
+## 1. Conformance
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
@@ -61,7 +79,7 @@ A collection of metadata and binary files that together have a unique identifier
 
 #### Service Description:
 
-(Required) An document consisting of one or more files describing the services or services ([endpoints]) provide by the payload of the Knowledge Object. The service description follows the [OpenAPI V3] specification. THe service specification is a complete specification of the API that will be exposed by the knowledge grid for a particular knowledge object. Clients can consume the service specification in order to navigate the API for the object or generate client code that interacts with the object. 
+(Required) An document consisting of one or more files describing the services or services ([endpoints]) provide by the payload of the Knowledge Object. The service description follows the [OpenAPI V3] specification. THe service specification is a complete specification of the API that will be exposed by the knowledge grid for a particular knowledge object. Clients can consume the service specification in order to navigate the API for the object or generate client code that interacts with the object.
 
 There is no default service description???
 
@@ -73,13 +91,13 @@ The service provides an API version, list of endpoints, schemas for inputs and o
 
 #### Deployment Description
 
-A deployment descriptor  (DD) refers to a configuration file for an artifact that is deployed to some container/engine. 
+A deployment descriptor  (DD) refers to a configuration file for an artifact that is deployed to some container/engine.
 
 In the Knowledge Grid, a deployment descriptor:
-- <conform>should</conform> identify a suitable runtime for the payload(s) associated with a particular endpoint. 
+- <conform>should</conform> identify a suitable runtime for the payload(s) associated with a particular endpoint.
 - <conform>may</conform> also provide information to a runtime adapter about the deployment (a list of data files). These properties <conform>may</conform> be runtime specific.
 - <conform>may</conform> point to other artifacts used by the runtime for deployment (e.g. a Docker file)
-- <conform>must</conform> be a json or yaml file with an `"runtime"` key and an `"endpoints array of 
+- <conform>must</conform> be a json or yaml file with an `"runtime"` key and an `"endpoints array of
 
 > DeploymentInstruction = def., an InformationArtifact that describes how to deploy a KnowledgeObject in the Knowledge Grid platform
 
@@ -138,9 +156,9 @@ The metadata.json file contains the structural description of the object
 }
 ```
 #### Core metadata
-- `@id` is a unique identifier for this object that allows it to be resolved within the knowledge grid. The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org) and top-level resolvers like [Name2Thing](http://www.n2t.net) and [Identifiers.org](http://www.identifiers.org). (Support for other identifiers like [DOI](http://www.doi.org)s is planned). 
+- `@id` is a unique identifier for this object that allows it to be resolved within the knowledge grid. The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org) and top-level resolvers like [Name2Thing](http://www.n2t.net) and [Identifiers.org](http://www.identifiers.org). (Support for other identifiers like [DOI](http://www.doi.org)s is planned).
     - It can either be an absolute or relative URL.
-    - See [Node Identifiers](https://w3c.github.io/json-ld-syntax/#node-identifiers) section of json-ld syntax. 
+    - See [Node Identifiers](https://w3c.github.io/json-ld-syntax/#node-identifiers) section of json-ld syntax.
 - `@type` Setting this to `"koio:KnowledgeObject"` is what declares this as a Knowledge Object. The Knowledge Grid depends on this when determining whether something is a Knowledge Object.
 - `@context`  is used to map koio terms to IRIs (along with other terms). Contexts can either be directly embedded into the document (an embedded context) or be referenced using a URL. Please use the koio context url: http://kgrid.org/koio/contexts/knowledgeobject.jsonld
     - See [The Context](https://www.w3.org/TR/json-ld/#the-context) section of json-ld syntax
@@ -195,24 +213,24 @@ endpoints:
     - `engine` The runtime that this Knowledge Object needs to be activated in.
 ##### Properties required by Runtimes
 - `artifact` (Required) An array pointing to each artifact this endpoint depends upon. These artifacts are loaded by a runtime at the time of activation. These paths are relative to the Deployment Description.
-- `entry` path to the file in the payload that contains the entry point, or "main" method. 
+- `entry` path to the file in the payload that contains the entry point, or "main" method.
 - `function` the main method that will be called to activate the object.
-    
+
 ### Payload Files
-The files related to the implementation of the services that this Knowledge Object provides. 
-- Can be in a directory, or all at top level, and <conform>should</conform> be referenced by the Metadata.json in the `hasPayload` element. 
+The files related to the implementation of the services that this Knowledge Object provides.
+- Can be in a directory, or all at top level, and <conform>should</conform> be referenced by the Metadata.json in the `hasPayload` element.
 - Payload files listed in the `hasPayload` element are useful for object browsing in libraries, signing, diffing two objects, etc. (The specification of payload objects is currently under development).
 - Payload files <conform>may</conform> be human or machine readable and of any type.
-- Payload files are limited in size only by the limits of the operating system. 
-- There is no limit to the number of payload files. 
+- Payload files are limited in size only by the limits of the operating system.
+- There is no limit to the number of payload files.
 - Payload files <conform>should</conform> be organized in a way that is natural for the code that implements the service.
 
 ##### Payload Manifest File <proposed>(proposed)</proposed>
-A json or yaml file that lists payload files in the same format that is used by `hasPayload` in metadata.json. Absolute or relative references are accepted. 
+A json or yaml file that lists payload files in the same format that is used by `hasPayload` in metadata.json. Absolute or relative references are accepted.
 ### Additional Metadata <proposed>(proposed)</proposed>
 Any additional files containing information that <conform>may</conform> be useful to those using this Knowledge Object. For example, linking CBK with supporting/corroborative sources, incl. provenance and additional domain and other descriptive metadata (is extensible).
 
-## 4. Versioning 
+## 4. Versioning
 - both resource and service; e.g. artifact and API versioning
 - <conform>should</conform> use semantic versioning, but <conform>may</conform> use a versioning scheme appropriate for the particular knowledge domain.
 - Service API versions <conform>may</conform> change less often than code versions.
