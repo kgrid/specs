@@ -11,7 +11,8 @@ module.exports = {
         { text: 'KGrid Common Package', link: '/packaging.md' },
         { text: 'KGrid Activation', link: '/activation.md' },
         { text: 'KGrid Runtime Adapters', link: '/runtimes.md' },
-        { text: 'KGrid Shelf API', link: '/shelf-api.md' }
+        { text: 'KGrid Shelf API', link: '/shelf-api.md' },
+        { text: 'KOIO', link: 'https://github.com/kgrid/koio' }
       ]}
     ],
     search: true,

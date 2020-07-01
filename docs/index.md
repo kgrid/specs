@@ -7,7 +7,7 @@ footer: GPL Licensed | Copyright © 2019-present University of Michigan
 <div class="features">
   <div class="feature">
     <div class="action hero">
-        <a href="packaging/" class="nav-link action-button">Common Object Package</a>
+        <a href="packaging/" class="nav-link action-button">Common Package</a>
     </div>    
     <p>A standard way to package a collection of artifacts representing an implementation of CBK.</p>
   </div>
