@@ -1,4 +1,4 @@
-# Knowledge Grid Commom Object Package specifications
+# KGrid Common Object Package specifications
 
 ## Introduction
 
