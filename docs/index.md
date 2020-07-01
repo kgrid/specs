@@ -3,7 +3,6 @@ home: true
 description: Specifications, Standard and API documentations
 footer: GPL Licensed | Copyright © 2018-present University of Michigan
 ---
-$year
 <div class="features">
   <div class="feature">
     <div class="action hero">
