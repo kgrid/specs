@@ -1,7 +1,7 @@
 ---
 home: true
 description: Specifications, Standard and API documentations
-footer: GPL Licensed | Copyright © 2019-present University of Michigan
+footer: GPL Licensed | Copyright © 2018-2020 University of Michigan
 ---
 
 <div class="features">

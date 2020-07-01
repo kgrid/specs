@@ -3,7 +3,7 @@ module.exports = {
   title: 'Knowledge Grid Specifications',
   themeConfig: {
     logo: '/images/kgrid-logo.png',
-    repo: 'kgrid/specs',
+    // repo: 'kgrid/specs',
     lastUpdated: 'Last Updated',
     nav: [
       { text: 'KGrid.org', link: 'https://kgrid.org' },
