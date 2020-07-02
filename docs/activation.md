@@ -1,6 +1,8 @@
-# Introduction
+# KGrid Common Activation Specifications
 
-The Activator is a reference implementation of the **activation** spec. This specification focuses on client interactions and integration with with various client systems. See runtime adapter development guide for more on how an Activator manages and interacts with runtimes. 
+## Introduction
+
+The Activator is a reference implementation of the **activation** spec. This specification focuses on client interactions and integration with with various client systems. See runtime adapter development guide for more on how an Activator manages and interacts with runtimes.
 
 ## Responsibilities of the Activator (...)
 
@@ -23,7 +25,7 @@ This spec represents our recommendations on how to meet the following needs:
 
 This document is draft of a potential specification. It has no official standing of any kind and does not represent the support or consensus of any standards organisation.
 
-# 1. Conformance 
+# 1. Conformance
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
@@ -36,7 +38,7 @@ See [KOIO] for matching ontology terms....
 #### Knowledge Object (KO):
 A collection of metadata and binary files that together have a unique identifier (including version identifier). There are three required file types: a service description, a deployment description, and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. See [Activation Spec] for details of the roles of the these files.
 > KOIO term — koio:KnowledgeObject
- 
+
 #### Shelf:
 
 The Knowledge Grid provides repository capabilities using a abstraction called the "Shelf." KOs are added to and managed for storage and retrieval through the Shelf API. Different concrete implementations of physical storage for KOs are available and not all capabilities are implemented in every component. See [Shelf API](shelf-api.md).
@@ -45,7 +47,7 @@ The Knowledge Grid provides repository capabilities using a abstraction called t
 A service path exposed by a particular knowledge object. Takes the form `/naan/name/endpoint`.
 
 #### Archival Resource Key (ARK):
-The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org) and top-level resolvers like [Name2Thing](http://www.n2t.net) and [Identifiers.org](http://www.identifiers.org). (Support for other identifiers like [DOI](http://www.doi.org)s is planned). 
+The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org) and top-level resolvers like [Name2Thing](http://www.n2t.net) and [Identifiers.org](http://www.identifiers.org). (Support for other identifiers like [DOI](http://www.doi.org)s is planned).
 
 #### Manifest:
 A representation of a collection knowledge object resources. The *minimal* representation is an array of KO metadata JSON-LD objects with an `@id` property.
@@ -64,7 +66,7 @@ Adapters allow particular Runtimes to interact with the Activator in order to de
 # 3. APIs
 ## Request API
 
-The Request API exposes the *micro*-API for the services provide by each KO. 
+The Request API exposes the *micro*-API for the services provide by each KO.
 
 ##### Service Description
 
@@ -132,7 +134,7 @@ Content-type: application/json
 }
 ```
 
-<proposed>(proposed)</proposed> Return KO output and link to provenance, tracing, etc. 
+<proposed>(proposed)</proposed> Return KO output and link to provenance, tracing, etc.
 Response code: HTTP/1.1 200
 
 ##### Errors:
@@ -153,7 +155,7 @@ A custom problem details resource is returned and the KO problem details or exce
 ##### KO endpoint micro-APIs
 The KO micro-API <conform>should</conform> be completely specified by the OpenAPI 3 service description. Clients rely on the service to use the API.
 
-- Each KO endpoint <conform>must</conform> accept inputs as spec'ed by the service description for a specific mime-type. 
+- Each KO endpoint <conform>must</conform> accept inputs as spec'ed by the service description for a specific mime-type.
 - KO endpoints <conform>may</conform> do their own validation. They <conform>should</conform> not rely entirely on <proposed>(proposed)</proposed> Activator validation
 - Each KO endpoint <conform>must</conform> produce outputs as spec'ed by the service description for a specific mime-type. An output schema <conform>should</conform> be specificied. If not clients will have to handle outputs of arbitrary complexity.
 - If the knowledge object can't service the request it <conform>should</conform> use a well-defined scheme for responses (codes, error messages, etc.) The activator wraps KO error responses unchanged.
@@ -163,7 +165,7 @@ The KO micro-API <conform>should</conform> be completely specified by the OpenAP
 - Each KO <conform>may</conform> have multiple endpoints as long as the full path is unique.
 
 
-## Activation API 
+## Activation API
 
 ##### Endpoint resources
 `/endpoints`
@@ -195,8 +197,8 @@ The KO micro-API <conform>should</conform> be completely specified by the OpenAP
 
 ##### Runtime activation via `/refresh`
 - `/refresh` — all current activations are discarded and the startup activation sequencce tries to activate every KO on the shelf
-- `/refresh/{naan}/{name}` — all current activations for the default version given KO are discarded and the KO is reactivated 
-- `/refresh/{naan}/{name}/{version}` — all current activations for the given version KO are discarded and the KO is reactivated 
+- `/refresh/{naan}/{name}` — all current activations for the default version given KO are discarded and the KO is reactivated
+- `/refresh/{naan}/{name}/{version}` — all current activations for the given version KO are discarded and the KO is reactivated
 
 ##### On every activation
 - When a KO is activated, a warning is logged for every endpoint that cannot be activated
@@ -210,7 +212,7 @@ An Activator <conform>must</conform> implement at least the read-only portion of
 
 <proposed>(proposed)</proposed> An activator <conform>must</conform> provide a resource representation for the knowledge object that includes activation status and endpoints.
 
-<proposed>(proposed)</proposed> An Activator <conform>should</conform> make available the service description for a knowledge object. 
+<proposed>(proposed)</proposed> An Activator <conform>should</conform> make available the service description for a knowledge object.
 
 <proposed>(proposed)</proposed> Access to the internals of the KO (deployment and payload files) <conform>should not</conform> be exposed, except that KOs of "resource" type <conform>may</conform> specify particular payloads for client access under appropriate service paths in the service description.
 
@@ -270,13 +272,13 @@ Content-Type: application/json
 ```
 
 ## Application and Health Information
-Activators <conform>should</conform> provide application and health information via `/health` and `/info` endpoints. 
+Activators <conform>should</conform> provide application and health information via `/health` and `/info` endpoints.
 
 ### `/health` (Required)
 
 The health enpoint <conform>must</conform> provide a `{ "status": "<UP|DOWN>" } response at a minimum. The `/health` endpoint <conform>should</conform>  indicate the status of individual components (adapters, shelf cdo store, runtimes, KOs and their activation status) to aid montioring in troubleshooting Activator deployments.
 
-We suggest following the conventions in the [Spring Boot production health information guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready-health). 
+We suggest following the conventions in the [Spring Boot production health information guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready-health).
 
 Health information <conform>should</conform> focus on details that help understand wy the Activator or a component is `up` or `down`. Extended information <conform>may</conform> be made available under an `/info` endpoint. See `/info` below.
 
@@ -323,7 +325,7 @@ Content-type: application/json
 A `DOWN` response returns:
 
 ```
-HTTP/1.1 503 
+HTTP/1.1 503
 Content-type: application/json
 {
   "status": "UP",

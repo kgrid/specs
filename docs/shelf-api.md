@@ -1,4 +1,6 @@
-# Introduction
+# KGrid Shelf API Specifications
+
+## Introduction
 
 This section is non-normative.
 
@@ -14,7 +16,7 @@ This spec represents our recommendations on how to meet the following needs:
 
 This document is draft of a potential specification. It has no official standing of any kind and does not represent the support or consensus of any standards organisation.
 
-## 1. Conformance 
+## 1. Conformance
 
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
@@ -91,4 +93,3 @@ Content-Type: application/json
 ]
 }]
 ```
-
