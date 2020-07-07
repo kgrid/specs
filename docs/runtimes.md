@@ -4,7 +4,7 @@
 
 
 ### Adapter Modes
-![Adapter Modes](/images/adapter-modes.png)
+![Adapter Modes](images/adapter-modes.png)
 
 #### (1) Adapter with embedded Runtime
 
