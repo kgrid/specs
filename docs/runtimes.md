@@ -58,7 +58,7 @@ See the individual adapter project for embedded and native adapters, and the pro
 
 ###  Guidance for embedded runtime developers 
 
-* see example: see [JavaScript V8 aAdapter](https://github.com/kgrid/javascript-v8-adapter)
+* see example: see [JavaScript V8 Adapter](https://github.com/kgrid/javascript-v8-adapter)
 * maybe how to use the Java ServiceLoader interface and set it up in `META-INF` 
 * Using the ActivationContext
 
