@@ -353,4 +353,5 @@ The `/info` endpoint <conform>should</conform> return a map of information sets 
 
 
 ##Notes
-How should the runtime (native, or w/ runtime adapter interface) be given the full _service_ path?
+If a KO is changed, the activator will have to be restarted to see the
+changes take effect.
