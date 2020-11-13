@@ -4,8 +4,6 @@
 This spec outlines the development of remote runtimes
 that communicate with the KGrid Activator via the Proxy Adapter's API.
 
-```Activator -> Proxy Adapter -> Remote Runtime```
-
 ##Runtime Lifecycle
 1. ####Load Cache (Optional)
     Optionally, a runtime can choose to try to activate Knowledge Objects
@@ -155,6 +153,11 @@ Response Body:
 ```
 Whatever response the KO endpoint wants to return
 ```
+
+Keep in mind, the endpointUri that the runtime gives to the activator is
+entirely up to the runtime, and does not need to be in any specific 
+format.
+
 ###Simple KO
 The most basic Knowledge Objects will just contain one code file, take
 some inputs, and return an output. Nothing special from what is described above.
@@ -167,6 +170,8 @@ into some kind of context accessible by the executive KO.
 
 ##Necessary Endpoints
 ###POST /endpoints
+This endpoint is for the loading of endpoints into the runtime.
+
    Endpoint:
    `POST` to `{RuntimeUrl}/endpoints`
       
@@ -208,6 +213,8 @@ into some kind of context accessible by the executive KO.
    ``` 
     
 ###GET  /endpoints
+Returns a list of all the endpoints the runtime knows about.
+
    Endpoint:
    `GET` to `{RuntimeUrl}/endpoints`
       
@@ -227,6 +234,8 @@ into some kind of context accessible by the executive KO.
    ``` 
     
 ###GET  /info
+Returns an object containing information about this runtime.
+
    Endpoint:
    `GET` to `{RuntimeUrl}/info`
       
@@ -242,11 +251,15 @@ into some kind of context accessible by the executive KO.
     "engine": "node",
     "status": "up",
     "url": "{runtimeUrl}",
-    "activatorUrl": "activatorUrl"
+    "activatorUrl": "{activatorUrl}"
     }
    ```
-###GET  /health
+
 ###GET  /register
+Triggers registration with the Activator.
+
+   Endpoint:
+   `GET` to `{RuntimeUrl}/register`
 
 ##Error Handling
 	Registration
