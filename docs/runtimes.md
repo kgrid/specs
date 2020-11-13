@@ -134,6 +134,18 @@ See the individual adapter project for embedded and native adapters, and the pro
 * dependency handling (both at activation and preloading)
 * Sample objects
 
+### Startup Behavior
+1. Load cache from disk (Optional)
+2. Register with Activator
+3. Handle Activation of KOs (excluding those loaded from cache)
+
+### Caching Knowledge Objects
+A runtime can optionally load Knowledge Objects from its persistence
+layer. The runtime can include a setting for caching strategy, for example
+'Cache Always', 'Cache Never', or 'Cache With Checksum'. 
+The Kgrid CLI will include a checksum in the deployment specification
+when it packages a KO. If the runtime chooses to load the cache by comparing
+the checksum to the last one the KO had when it was loaded, that is available.
 
 
 
