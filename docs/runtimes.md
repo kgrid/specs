@@ -14,18 +14,26 @@ This document gives an overview of how to design, develop, and use ***runtimes**
 
 ### Some terms
 
-We will refer to ***Computable Biomedical Knowledge (CBK)*** when we talk about the model, algorithm, ruleset, or decision-making logic, generally. We will refer to the ***payload*** (of a KO), code, or implementation when we mean a particular instance or implementation of some piece CBK. 
+We will refer to ***Computable Biomedical Knowledge (CBK)*** when we talk about the model, algorithm, ruleset, or decision-making logic generally. We will refer to the ***payload*** (of a KO), code, or implementation when we mean a particular instance or implementation of some piece CBK. The Knowledge Grid is generally best suited to CBK which can be characterized as one or more interactive ***services*** (e.g. question and answer or [pure functions](https://en.wikipedia.org/wiki/Pure_function)).
 
-A ***runtime*** is simply a computing envirmonment suitable for running a class of CBK instances. For example [Node.js](https://nodejs.org/en/) is a JavaScript runtime built on Chrome's V8 JavaScript engine. The 
+A ***Knowledge object (KO)*** contains a payload which is an implementation of the service(s) that form a particular example of CBK. We sometimes refer to the process of creating such a KO as `K -> K'`. What we mean by `K -> K'` is taking some model or algorithm (which may even already be in a computable form) and making it ready to be run as a service by describing its interactions, inputs and outputs, handling errors and exceptions, specifying how it is used with other KOs, and testing or validating its correctness and performance. 
 
-The ***Activator*** is the Kgrid component responsible for deploying and interacting with CBK. When the CBK is packaged as a payload inside a KO (along with metadata) the Activator can move the code to a ***runtime*** and route requests to its service(s) using a simple API.
+A ***runtime*** is simply a computing environment suitable for running a class of CBK implementations. For example [Node.js](https://nodejs.org/en/) is a JavaScript runtime built on Chrome's V8 JavaScript engine. A [Jupyter Notebook](https://jupyter.org/) installation could be a more complex runtime environment for some kinds of CBK. 
 
-So, a KO contains a payload which is an implementation of the service(s) that make up particalr instance of CBK. We sometimes refer to the process of create such a KO as `K -> K'`. What we mean by  we mean by `K -> K'` is taking some model or algorithm (which may even already be in a computable form) and making it ready to be run as a service by describing its inputs and outputs, handling errors and exceptions, specifying how it is used with other KOs, testing and validating its correctness and performance. A [Jupyter Notebook](https://jupyter.org/) installation could be a more complex runtime environment for some CBK.
+When we say ***activation*** we mean the process of taking a particular implementation of CBK (the payload of a KO), deploying it in a suitable runtime environment, and then exposing its services to clients (usually other applications or systems).
+
+The ***Activator*** is the Kgrid component responsible for activating and interacting with instances of CBK packaged as KOs. When the CBK is packaged as a payload inside a KO (along with metadata) the Activator can typically move the code to a ***runtime*** and route requests to its service(s) automatically, using a simple API.
 
 ### The motivation for allowing many CBK runtimes
 
+THe Knowledge Grid considers implementation details like the computer language, operating system, data types, etc. to be unimportant. Only three things are required to activate a KO:
+ * a suitable runtime environment for the payload
+ * instructions (preferably automated) for deploying the payload
+ * a description of the interactions supported (as an OpenAPI document, for now)
+ 
+ Every class of CBK packaged as a knowledge object must specify the associated runtime. Runtimes are independent of the Knowledge Grid
 
-Consider a simple kind of computable knowledge, in this case the [***60-Second Type 2 Diabetes Risk Test***](https://www.diabetes.org/risk-test) from the American Diabetes Association. It takes as inputs the following individual characteristics:
+Consider a simple example of computable knowledge, in this case the [***60-Second Type 2 Diabetes Risk Test***](https://www.diabetes.org/risk-test) from the American Diabetes Association. It takes as inputs the following individual characteristics:
 - **Age**: LESS THAN 40, 40-49, 50-59, 60 OR OLDER
 - **Gender**: Woman, Man
 - **Family history** (mother, father, sibling)?: Yes, No
@@ -35,9 +43,9 @@ Consider a simple kind of computable knowledge, in this case the [***60-Second T
 - **Height**: ft/in or cm
 - **Weight**: lbs or kilos
 
-The answers to these questions are submitted, a calculation is performed, and a score from 1-10, along with a categorization of low, medium, or high risk, is returned. This same ***risk model*** could be reused in many ways—a web app for the public, embedded in an EHR system, as a small app for a counseling dietitian. 
+The answers to these questions are submitted, a calculation is performed, and a score from 1-10, along with a categorization of low, medium, or high risk, is returned. This same ***risk model*** could be reused in many ways—a web app for the public, embedded in an EHR system, or as a small desktop app for a counseling dietitian. 
 
-Consider also that the code for this risk model could be written in almost any computer language. It might have been done on paper once, then in a spreadsheet, then in Javascript for a web application. Maybe the researcher who developed the model for the ADA runs retrospective risk analysis on a batch of patients using the same model coded in Python or R. As simple as the code would likely be, we assume that some testing and validation was done; it might be important to reuse the very same code as near as possible to avoid introducing bugs. It might be that the implementer planning a new use of the model is simply more comfortable writing code in a particular language.
+Consider also that the code for this risk model could be written in almost any computer language. It might have been done on paper once, then in a spreadsheet, then in Javascript for a web application. Maybe the researcher who developed the model for the ADA runs retrospective risk analyses on batches of patients using the same model coded in Python or R. As simple as the code would likely be, we assume that some testing and validation was done; it might be important to reuse the very same code as near as possible to avoid introducing bugs. It might be that the implementer planning a new use of the model is simply more comfortable writing code in a particular language.
 
 As mentioned, the Activator is the Kgrid component responsible for loading KOs, deploying payloads, and routing requests to the KO's services, but the actual code or payload runs in a separate, independent ***runtime***. As much as possible there are no restrictions on the type or use of a particular runtime; if the code runs in Python or Node.js without the Kgrid, it should run unchanged with the Kgrid. Wrapping the payload in a Knowledge Object and using a Kgrid Activator to handle deployment and request routing is a value-add, rather than a requirement. 
 
