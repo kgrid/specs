@@ -2,7 +2,20 @@
 home: true
 description: Specifications, Standard and API documentations
 footer: GPL Licensed | Copyright © 2018-present University of Michigan
+
 ---
+
+# Draft of Activation Specification
+<div class="features">
+  <div class="feature">
+    <div class="action hero">
+        <a href="ActivationSpec/" class="nav-link action-button">Activation specifications</a>
+    </div>    
+    <p>The non-implementation-specific capabilities of activators used for activating service-class objects.</p>
+  </div>
+</div>
+
+# Legacy Specifications
 <div class="features">
   <div class="feature">
     <div class="action hero">

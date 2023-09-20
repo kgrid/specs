@@ -20,7 +20,7 @@
     "url": "https://github.com/kgrid/specs/issues"
   },
   "homepage": "https://github.com/kgrid/specs#readme",
-  "dependencies": {
-    "vuepress": "^1.5.2"
+  "devDependencies": {
+    "vuepress": "^1.9.10"
   }
 }
