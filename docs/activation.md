@@ -343,7 +343,7 @@ An Activator implementation <conform>may</conform> use additional statuses as ne
 
 ### `/info` (Optional)
 
-Additional or extended information about the opertating characteristics of the Activator can be made available under an `/info` endpoint. See [Spring Boot application health information guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready-application-info) for examples of suitable patterns which can be implemented in many different frameworks and languages.
+Additional or extended information about the operating characteristics of the Activator can be made available under an `/info` endpoint. See [Spring Boot application health information guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready-application-info) for examples of suitable patterns which can be implemented in many different frameworks and languages.
 
 We suggest that implementations provide things like a list of adapters and runtimes currently deployed, as well as counts or lists of KOs available to the Activator, endpoints activated, perhaps total requests, uptime, build information, key environemnt variables, etc.
 
