@@ -326,7 +326,7 @@ The activator SHOULD use domain specific custom exceptions for error handling of
     }
     ```
 
-### Logging
+### 5.5 Logging
 
 The activator MUST log normal events like loading and installing KOs and requests and responses for endpoints. 
 
