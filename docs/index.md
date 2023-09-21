@@ -9,7 +9,7 @@ footer: GPL Licensed | Copyright © 2018-present University of Michigan
 <div class="features">
   <div class="feature">
     <div class="action hero">
-        <a href="activationspec/" class="nav-link action-button">Activation specifications</a>
+        <a href="activationspec/" class="nav-link action-button">Activation Specifications</a>
     </div>    
     <p>The non-implementation-specific capabilities of activators used for activating service-class objects.</p>
   </div>
