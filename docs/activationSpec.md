@@ -3,7 +3,7 @@
 __Version 0.1.0__
 
 ## 1. Introduction
-A knowledge grid activator empowers users to execute computational biomedical knowledge objects (CBK) through simple API calls. The knowledge grid activator specification defines a standard, language-agnostic set of rules that could be used to implement a knowledge grid compliant activator. 
+A knowledge grid activator implements our metamodel for computational knowledge artifact “activation” that empowers users to execute computational biomedical knowledge objects (CBK). This specification defines a standard, language-agnostic set of rules that could be used to implement a knowledge grid compliant activator. 
 
 ## 2. Purpose
 Our goal is to design and build a meta model that helps move biomedical knowledge into practice more quickly, more broadly and more accurately than ever before. Our activator model will make it as simple as possible to implement computational biomedical knowledge objects (CBKs), share them with the world and use others. This requires infrastructural standards and specifications that enable integration at scale. By offering a unified platform for CBK activation and integration, the activator aims to achieve several key goals:
