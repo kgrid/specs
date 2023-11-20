@@ -344,7 +344,7 @@ The activator SHOULD use a short representation of KOs for logging including
 
 For environment variables to avoid conflicts with other activators and apps, the activator SHOULD use its id as part of the environment variable names. Example: ORG_KGRID_PYTHON_ACTIVATOR_MANIFEST_PATH
 
-### Knowledge Object Implementation
+### Knowledge Object Implementation <a name="object"></a>
 
 Knowledge object is a collection of metadata and binary files that together have a unique identifier (including version identifier). There are some required and some optional file types in a knowledge object: 
 
