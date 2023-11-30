@@ -23,7 +23,7 @@ This document is a __draft__ of a potential specification. It has no official st
 ## 4. Definitions
 
 ### 4.1 Knowledge Object (KO)
-A collection of metadata and binary files that together have a unique identifier (including version identifier). There are four required file types: a service description, a deployment description, a file that contains metadata and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. The metadata of a KO could be exposed using a get request to {server path}/kos/{ko id}.  See [Metadata detail](#metadata) for more detail.
+A collection of metadata and binary files that together have a unique identifier (including version identifier). There are four required file types: a service description, a deployment description, a file that contains metadata and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. The metadata of a KO, when loaded in an activator, could be exposed using a get request to {server path}/kos/{ko id}.  See [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) for more detail.
 
 ### 4.2 KO Endpoint
 A service path exposed by a particular knowledge object. Takes the form {server path}/endpoints/{ko id}/{endpoint id}. If a get request is sent to an endpoint it will reveal deployment info of that endpoint. If a post request with a body is sent to the endpoint it will pass it to and execute the corresponding function of that endpoint and return the result of the function as response.
@@ -41,7 +41,7 @@ The process of deploying an implementation of a KO into an activator in order to
 A representation of a collection of KOs. The minimal representation is an array of KO metadata JSON-LD objects with an @id property and location. Activator implementations may choose to use a local manifest. It may be created in the cache and it can include loading details other than the original manifest information.This local manifest could be used as a way to pass the state of the loaded KOs from loading step to installation step. This will be helpful specially if these steps are made available independent of each other using CLI commands.
 
 ### 4.7 Metadata
-Metadata is commonly described as “data about data”, but for our purposes can perhaps be better understood as machine-readable documentation of the administrative, descriptive and technical properties of the KOs. Metadata refers to information that describes and represents KOs and provides context for it. See [Metadata detail](#metadata) for more detail.
+Metadata is commonly described as “data about data”, but for our purposes can perhaps be better understood as machine-readable documentation of the administrative, descriptive and technical properties of the KOs. Metadata refers to information that describes and represents KOs and provides context for it. See [Metadata section of Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md#kgrid2metadata) for more detail.
 
 ### 4.8 Loading KOs
 Loading refers to the process of retrieving, validating and initializing knowledge objects that are listed on the input manifest. This process may include preparing a local copy of the knowledge objects listed on the manifest.
@@ -88,9 +88,13 @@ The activator MUST use the local manifest to install the KOs that are successful
 
 The activator MUST install KOs and provide access to their functions based on the deployment data. 
 
-The activator MUST use a routing mechanism to be able to direct requests for each endpoint to the corresponding function. Each KO MAY have multiple routes (endpoints).
+The activator MIGHT support installation of KOs that are implemented using different versions of kgrid (for more detail on different kgrid versions please refere to [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) on our koio ontology repository). The activator MUST specify in its documentation that which kgrid versions it supports.
 
-The activator MUST consider the engine of each KO, listed in their deployment file, to install only the ones that are compatible with the current activator. The activator SHOULD use the engine specific detail from the deployment file to perform KO installation.
+When activating kgrid 1 KOs, the activator MUST consider the engine of each KO, listed in their deployment file, to only install the ones that are compatible with the activator. For kgrid 2 KOs the activator MUST look at the engine of each service, listed in metadata, to only install the KO services that are compatible with the activator.   
+
+The activator SHOULD use the engine specific detail from the deployment file to perform KO installation.
+
+The activator MUST use a routing mechanism to be able to direct requests for each endpoint to the corresponding function. Each KO MAY have multiple routes (endpoints).
 
 The activator SHOULD keep track of the KO status and error from loading to installation. It SHOULD update KO’s activation status and error with the status and errors of the installation.
 
@@ -238,7 +242,7 @@ Content-type: application/json
 }
 ```
 
-### 5.4 KO request / response API
+### 5.4 KO request / response API <a name="postrequest"></a>
 
 Request:
 
@@ -336,8 +340,6 @@ The activator SHOULD use a short representation of KOs for logging including
 - status
 - Error (if any)
 
-### 5.6 CLI
-
 ## Appendix
 
 ### Notes
@@ -346,221 +348,12 @@ For environment variables to avoid conflicts with other activators and apps, the
 
 ### Knowledge Object Implementation <a name="object"></a>
 
-Knowledge object is a collection of metadata and binary files that together have a unique identifier (including version identifier). There are some required and some optional file types in a knowledge object: 
+Knowledge object is a collection of metadata and binary files that together have a unique identifier (including a version identifier). There are some required and some optional file types in a knowledge object. These files, their content and the way they are structured inside a KO could vary deponding on which kgrid version is used to create the knowledge object. Please refere to [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) on our koio ontology repository for documentation on different versions of krid knowledge object model.
 
-- a file that contains metadata (metadata.json)
-- a deployment description (deployment.yaml)
-- a service description (service.yaml)
-- one or more payload files implementing the service described by the service description, deployable using the information in the deployment description  
-- test files (optional)
-
-#### Metadata <a name="metadata"></a>
-
-A knowledge object must include a metadata file (metadata.json) in the root of KO, which contains machine-readable documentation of the administrative, descriptive and technical properties of the KOs. Metadata refers to information that describes and represents KOs and provides context for it. The metadata file includes 
-
-- __@id__: It is a unique identifier for this object that allows it to be resolved within the knowledge grid. It can either be an absolute or relative URL. See [Node Identifiers](https://w3c.github.io/json-ld-syntax/#node-identifiers) section of json-ld syntax.
-
-- __@identifier__: The identifier field is an extra globally unique identifier. The Knowledge Grid currently uses [ARK](https://n2t.net/e/ark_ids.html) identifiers natively which interoperate with [EZID](http://ezid.cdlib.org/) and top-level resolvers like [Name2Thing](http://www.n2t.net/) and [Identifiers.org](http://www.identifiers.org/). (Support for other identifiers like [DOI](http://www.doi.org/)s is planned).
-
-- __@type__: Setting this to "koio:KnowledgeObject" is what declares this as a Knowledge Object. The Knowledge Grid depends on this when determining whether something is a Knowledge Object.
-
-- __title__: This field represents the name or title of the Knowledge Object (KO). It is a brief and descriptive label that conveys the central topic, focus, or purpose of the KO.
-
-- __version__: It indicates the specific version or release of the KO. It helps to identify and distinguish between different iterations or updates of the KO. Versioning is important for tracking changes and ensuring compatibility.
-
-- __description__: This field provides a comprehensive summary of the KO. It offers users a clear understanding of the KO's content (structure and functionality), purpose, and significance. The description should concisely convey what the KO is about, its intended use, and any unique features or contributions it offers.
-
-- __contributors__: It identifies individuals or entities who have played a meaningful and significant role in the creation, development, or maintenance of this KO. Contributors encompass a wide range of roles and responsibilities related to the KO, and they may include authors, researchers, designers, developers, reviewers, editors, and other relevant parties. It may include authors, developers, reviewers and editors, project managers, data providers and funding resources.
-
-- __keywords__: Keywords field consists of a list of words or phrases that succinctly describe the central topics, themes, and concepts addressed within the Knowledge Object. These keywords help users quickly identify relevant KOs when searching or browsing within a knowledge repository.
-
-- __hasServiceSpecification__: This is the path to the service description file of the KO.
-
-- __hasDeploymentSpecification__: This is the path to the deployment description file of the KO.
-
-- __@context__: This field is used to map koio terms to IRIs (along with other terms). Contexts can either be directly embedded into the document (an embedded context) or be referenced using a URL. Please use the koio context url: http://kgrid.org/koio/contexts/knowledgeobject.jsonld
-
-
-Here is an example of a metadata file for a BMI calculator KO.
-
-```json
-{
-  "@id" : "bmi/calculator/v1.0",
-  "@type" : "koio:KnowledgeObject",
-  "title" : "BMI calculator",
-  "identifier" : "ark:/bmi/calculator/v1.0",
-  "version" : "v1.0",
-  "description" : "A knowledge object to calculate BMI and categories",
-  "contributors" : "Kgrid Team",
-  "keywords" : [ "BMI", "calculator" ],
-  "hasServiceSpecification" : "service.yaml",
-  "hasDeploymentSpecification" : "deployment.yaml",
-  "hasPayload" : "src/bmi_calculator/bmi.py",
-  "@context" : [ "http://kgrid.org/koio/contexts/knowledgeobject.jsonld" ]
-}
-```
-
-#### Deployment Description
-
-A knowledge object must include a deployment description (deployment.yaml) in the root of KO, which includes all the details needed for deploying the KO in an activator. For each endpoint in the KO, this file will include the following:
-
-- __endpoint id__: Endpoint id is used as part of the route to the endpoint.
-
-- __method type__: Method type is ‘post’ for the deployment, as ‘get’ is used to expose deployment specifications for endpoints.
-
-- __engine__: We are still exploring the idea of having multiple implementations for multiple activators in the same KO, but at this point each endpoint should have one engine section in the deployment file which includes the activator name and the specific detail needed for deployment of KO in it. In the case of python activator, it includes detail on how to locate the function implementing the endpoint function.
-
-Here is an example of a deployment file for the BMI calculator KO:
-
-```yaml
-/bmi:
-  post:    
-    engine:
-      name: org.kgrid.python-activator
-      package: bmi_calculator
-      module: bmi
-      function: calculate_bmi   
-/category:
-  post:    
-    engine:
-      name: org.kgrid.python-activator
-      package: bmi_calculator
-      module: bmi
-      function: get_bmi_category
-```
-
-#### Service Description
-
-A knowledge object must include a service description (service.yaml) in the root of KO, which includes the information needed to provide documentation and test interface using swagger editor. (See [OpenAPISpecification](https://swagger.io/specification/) for more detail)
-
-Here is an example if service description file for BMI Calculator KO:
-
-```yaml
-openapi: 3.0.0
-info:
-  version: '1.0'
-  title: 'bmi calculator'
-  description: 'A knowledge object to calculate bmi and categories.'
-  license:
-    name: GNU General Public License v3 (GPL-3)
-    url: >-
-      https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)#fulltext
-  contact:
-    name: KGrid Team
-    email: kgrid-developers@umich.edu
-    url: 'http://kgrid.org'
-servers:
-  - url: /endpoints/bmi/calculator/v1.0
-    description: Calculate bmi
-tags:
-  - name: KO Endpoints
-    description: bmi calculation Endpoints    
-paths:
-  /bmi:
-    post:
-      summary: Calculate bmi value.
-      description: Calculates bmi value.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:  
-                height:
-                  type: number
-                  format: float
-                  description: Height of the person. If using 'imperial' unit_system, use height in inches.
-                  example: 175.0              
-                weight:
-                  type: number
-                  format: float
-                  description: Weight of the person. If using 'imperial' unit_system, use weight in pounds.
-                  example: 70.0                
-                unit_system:
-                  type: string
-                  enum: [metric, imperial]
-                  description: Unit system for weight and height ('metric' or 'imperial').
-                  example: metric
-      responses:
-        '200':
-          description: Successfully calculated bmi value.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  bmi:
-                    type: number
-                    format: float
-                    description: bmi.
-                    example: 19.0
-                $ref: 'https://demo.kgrid.org/schemas/openapischemas.yaml#/components/schemas/genericresponse'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: 'https://demo.kgrid.org/schemas/openapischemas.yaml#/components/schemas/genericerror'
-  /category:
-    post:
-      summary: Calculate category value.
-      description: Calculates category value.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:  
-                bmi:
-                  type: number
-                  format: float
-                  description: bmi of the person.
-                  example: 20.0              
-      responses:
-        '200':
-          description: Successfully calculated bmi category.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  category:
-                    type: string
-                    description: bmi category.
-                    example: Normal weight
-                $ref: 'https://demo.kgrid.org/schemas/openapischemas.yaml#/components/schemas/genericresponse'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: 'https://demo.kgrid.org/schemas/openapischemas.yaml#/components/schemas/genericerror'
-```
-
-#### Payload Files
-
-Each KO includes one or more payload files which implements the KO service. The implementation and structure of the payload files within the KO folder depend on the specific activator it is implemented for. But what is common between all KO implementations is that there should be a function, implemented in payloads, that would be the point of access for executing the service for each endpoint. Engine specific section of the deployment file will contain information for activators on how to find that function for each endpoint. 
-
-As an example, for KOs implemented for Python activator (org.kgrid.python-activator), the KO payloads must be structured as a python package inside the KO folder. There are a few different ways to create a python package that require different files and structure. Here is an example of Poetry being used to create the BMI calculator KO for python activator:
-
-```
-bmi-calculator/
-├── deployment.yaml
-├── metadata.json
-├── pyproject.toml
-├── service.yaml
-├── src
-│      └── bmi_calculator
-│               ├── __init__.py
-│               └── bmi.py
-└── tests
-                ├── __init__.py
-                └── test_bmi.py
-
-```
-
-#### Test Files
-
-The Ko may include some test files that test the KO payloads with some sample test cases.
+## Related links
+- [Kgrid Website](https://kgrid.org/)
+- [Python Activator](https://github.com/kgrid/python-activator)
+- [JavaScrirpt Activator](https://github.com/kgrid/javascript-activator)
+- [kgrid Reference Objects](https://github.com/kgrid/reference-objects)
+- [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) 
+- [Knowledge Object Implementation Ontology (KOIO)](https://github.com/kgrid/koio)
