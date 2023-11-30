@@ -23,7 +23,7 @@ This document is a __draft__ of a potential specification. It has no official st
 ## 4. Definitions
 
 ### 4.1 Knowledge Object (KO)
-A collection of metadata and binary files that together have a unique identifier (including version identifier). There are four required file types: a service description, a deployment description, a file that contains metadata and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. The metadata of a KO, when loaded in an activator, could be exposed using a get request to {server path}/kos/{ko id}.  See [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) for more detail.
+A collection of metadata and binary files that together have a unique identifier (including version identifier). There are four required file types: a service description, a deployment description, a file that contains metadata and one or more payload files implementing the service described by the service description, deployable using the information in the deployment description. The metadata of a KO, when loaded in an activator, could be exposed using a get request to {server path}/kos/{ko id}.  See [Kgrid Knowledge Objects](https://github.com/kgrid/koio/blob/master/kgrid_knowledge_objects.md) for more detail.
 
 ### 4.2 KO Endpoint
 A service path exposed by a particular knowledge object. Takes the form {server path}/endpoints/{ko id}/{endpoint id}. If a get request is sent to an endpoint it will reveal deployment info of that endpoint. If a post request with a body is sent to the endpoint it will pass it to and execute the corresponding function of that endpoint and return the result of the function as response.
@@ -41,7 +41,7 @@ The process of deploying an implementation of a KO into an activator in order to
 A representation of a collection of KOs. The minimal representation is an array of KO metadata JSON-LD objects with an @id property and location. Activator implementations may choose to use a local manifest. It may be created in the cache and it can include loading details other than the original manifest information.This local manifest could be used as a way to pass the state of the loaded KOs from loading step to installation step. This will be helpful specially if these steps are made available independent of each other using CLI commands.
 
 ### 4.7 Metadata
-Metadata is commonly described as “data about data”, but for our purposes can perhaps be better understood as machine-readable documentation of the administrative, descriptive and technical properties of the KOs. Metadata refers to information that describes and represents KOs and provides context for it. See [Metadata section of Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md#kgrid2metadata) for more detail.
+Metadata is commonly described as “data about data”, but for our purposes can perhaps be better understood as machine-readable documentation of the administrative, descriptive and technical properties of the KOs. Metadata refers to information that describes and represents KOs and provides context for it. See [Metadata section of Kgrid Knowledge Objects](https://github.com/kgrid/koio/blob/master/kgrid_knowledge_objects.md#kgrid2metadata) for more detail.
 
 ### 4.8 Loading KOs
 Loading refers to the process of retrieving, validating and initializing knowledge objects that are listed on the input manifest. This process may include preparing a local copy of the knowledge objects listed on the manifest.
@@ -88,7 +88,7 @@ The activator MUST use the local manifest to install the KOs that are successful
 
 The activator MUST install KOs and provide access to their functions based on the deployment data. 
 
-The activator MIGHT support installation of KOs that are implemented using different versions of kgrid (for more detail on different kgrid versions please refere to [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) on our koio ontology repository). The activator MUST specify in its documentation that which kgrid versions it supports.
+The activator MIGHT support installation of KOs that are implemented using different versions of kgrid (for more detail on different kgrid versions please refere to [Kgrid Knowledge Objects](https://github.com/kgrid/koio/blob/master/kgrid_knowledge_objects.md) on our koio ontology repository). The activator MUST specify in its documentation that which kgrid versions it supports.
 
 When activating kgrid 1 KOs, the activator MUST consider the engine of each KO, listed in their deployment file, to only install the ones that are compatible with the activator. For kgrid 2 KOs the activator MUST look at the engine of each service, listed in metadata, to only install the KO services that are compatible with the activator.   
 
@@ -365,5 +365,5 @@ Knowledge object is a collection of metadata and binary files that together have
 - [Python Activator](https://github.com/kgrid/python-activator)
 - [JavaScrirpt Activator](https://github.com/kgrid/javascript-activator)
 - [kgrid Reference Objects](https://github.com/kgrid/reference-objects)
-- [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) 
+- [Kgrid Knowledge Objects](https://github.com/kgrid/koio/blob/master/kgrid_knowledge_objects.md) 
 - [Knowledge Object Implementation Ontology (KOIO)](https://github.com/kgrid/koio)
