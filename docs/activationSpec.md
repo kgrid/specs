@@ -340,6 +340,16 @@ The activator SHOULD use a short representation of KOs for logging including
 - status
 - Error (if any)
 
+## 6. Reference Implementations
+The following two activators are implemented as reference implementations of this specification 
+
+
+[Python Activator](https://github.com/kgrid/python-activator) and [JavaScrirpt Activator](https://github.com/kgrid/javascript-activator) are reference implementations of this Knowledge Grid Activator Specification and both adhere meticulously to this specification. They serves as reliable and compliant models for the activation of computable biomedical knowledge objects as per the specified guidelines.
+
+In the course of implementing the Python and JavaScript activator, certain aspects of the application required nuanced considerations due to rules that were not explicitly defined or were presented with a degree of flexibility in the specifications. To see more detail on these customizations and adaptations please see Customizations and Adaptations section of the documentation in each activator.
+
+In areas where the specifications did not explicitly define rules for certain aspects of the application, the Python and JavaScript activators were implemented with additional features, incorporating assumptions and following certain approaches, ensuring that they do not infringe upon or violate the specification. To see more detail about these features and assumptions please see Extended Features and Implementation Considerations section of the documentation in each activator.
+
 ## Appendix
 
 ### Notes
