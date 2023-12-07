@@ -38,7 +38,7 @@ It is a unique identifier for a single function within the ko identified by the 
 The process of deploying an implementation of a KO into an activator in order to make the service endpoints. This includes loading and installing the KO package, extracting the service function based on deployment data and exposing the function through api calls.
 
 ### 4.6 Manifest
-A representation of a collection of KOs. The minimal representation is an array of KO metadata JSON-LD objects with an @id property and location. Activator implementations may choose to use a local manifest. It may be created in the cache and it can include loading details other than the original manifest information.This local manifest could be used as a way to pass the state of the loaded KOs from loading step to installation step. This will be helpful specially if these steps are made available independent of each other using CLI commands.
+A representation of a collection of KOs. The minimal representation is an array of KO metadata JSON-LD objects with an @id property and location. Activator implementations may choose to use a local manifest. It may be created in the cache and it can include loading details other than the original manifest information. This local manifest could be used as a way to pass the state of the loaded KOs from loading step to installation step. This will be helpful specially if these steps are made available independent of each other using CLI commands.
 
 ### 4.7 Metadata
 Metadata is commonly described as “data about data”, but for our purposes can perhaps be better understood as machine-readable documentation of the administrative, descriptive and technical properties of the KOs. Metadata refers to information that describes and represents KOs and provides context for it. See [Metadata section of Kgrid Knowledge Objects](https://github.com/kgrid/koio/blob/master/kgrid_knowledge_objects.md#kgrid2metadata) for more detail.
@@ -51,16 +51,16 @@ It refers to the process of configuring and setting KOs up to work within your s
 
 ## 5. Specifications
 ### 5.1 Caching
-The activator MAY cache KOs and keep them locally. If the KOs are cached then the activator SHOULD report the local url.
+The activator MAY cache KOs and keep them locally. If the KOs are cached then the activator SHOULD report the local URL.
 
 ### 5.2 Manifest path
 The activator MUST load KOs from a manifest file that has the specific format mentioned in specs. 
 
-The activator MUST allow the manifest path to be defined at runtime (typically through an environment variable). The manifest path MUST be a valid URI. Implementations MAY additionally allow local file path references, including relative path. Additional tooling MAY allow manifest paths to be set in other ways (e.g. by command line properties ).
+The activator MUST allow the manifest path to be defined at runtime (typically through an environment variable). The manifest path MUST be a valid URI. Implementations MAY additionally allow local file path references, including relative path. Additional tooling MAY allow manifest paths to be set in other ways (e.g. by command line properties).
 
-The activator SHOULD resolve the manifest item’s, if their location is not absolute, using the manifest path.
+The activator SHOULD resolve the manifest items, if their location is not absolute, using the manifest path.
 
-If the manifest path is used as an environment variable, to avoid conflicts with other activators and apps, the activator SHOULD use its id as part of the environment variable names. Example: ORG_KGRID_PYTHON_ACTIVATOR_MANIFEST_PATH. Activator developers SHOULD document  what they are using for the name of the environment variable. If no environment variable is set, the system MAY load objects from a well known location.
+If the manifest path is used as an environment variable, to avoid conflicts with other activators and apps, the activator SHOULD use its id as part of the environment variable names. Example: ORG_KGRID_PYTHON_ACTIVATOR_MANIFEST_PATH. Activator developers SHOULD document what they are using for the name of the environment variable. If no environment variable is set, the system MAY load objects from a well-known location.
 
 ### 5.3 Activation
 #### 5.3.1 Loading
@@ -68,9 +68,9 @@ The activator MUST use a provided manifest to effectively load new KOs. It MUST 
 
 When loading KOs from a manifest, the activator MAY create a local copy of KOs (a cache) or MAY access, validate and use them from a remote resource. If KOs are compressed the activator MAY decompress them.
 
-The activator SHOULD keep track of the loading status and errors and report them as part of the activation status. If the activator fails to load some or all of the KOs, it still SHOULD report the status and error for all KOs listed in the manifest. Activator implementations MAY choose to use a local manifest to store this information to be used in the next steps of the activation and in reporting. This local manifest MAY be created in the cache and MAY include the following information for each KO:
+The activator SHOULD keep track of the loading status and errors and report them as part of the activation status. If the activator fails to load some or all the KOs, it still SHOULD report the status and error for all KOs listed in the manifest. Activator implementations MAY choose to use a local manifest to store this information to be used in the next steps of the activation and in reporting. This local manifest MAY be created in the cache and MAY include the following information for each KO:
 
-> 1. KO metadata (at least the @id from input manifest, if KO could not be loaded)
+> 1. KO metadata (at least the @id from input manifest if KO could not be loaded)
 > 2. Activation status for each KO
 > 3. Loading error, if any, for each KO
 > 4. Original_url from the input manifest
@@ -130,7 +130,7 @@ GET /kos HTTP/1.1
 Accept: application/json
 ```
 
-Activator MUST provide the list of kos on GET requests at {server path}/kos. This list MUST include metadata for each KO loaded from metadata.json files and it SHOULD include additional fields like status, original url and local url, if KOs are cached. It MAY include an error field, if there was an error in loading or installing the KO.
+Activator MUST provide the list of kos on GET requests at {server path}/kos. This list MUST include metadata for each KO loaded from metadata.json files and it SHOULD include additional fields like status, original URL and local URL, if KOs are cached. It MAY include an error field, if there was an error in loading or installing the KO.
 
 Request:
 
@@ -252,7 +252,7 @@ Accept: application/json
 Content-type: application/json
 ```
 
-On POST requests for an endpoint at {server path}/endpoints/{ko id}/{endpoint id}, the activator MUST execute the function corresponding to the endpoint. It MUST pass the body of the request to the function. Here is an example of the body of the request in json format for the BMI calculator:
+On POST requests for an endpoint at {server path}/endpoints/{ko id}/{endpoint id}, the activator MUST execute the function corresponding to the endpoint. It MUST pass the body of the request to the function. Here is an example of the body of the request in Json format for the BMI calculator:
 
 
 ```json
@@ -308,7 +308,7 @@ The activator SHOULD use domain specific custom exceptions for error handling of
     }
     ```
 
-- KONotFoundError MAY be used for errors related to not being able to find a KO using the provided ko path  with error code 404:
+- KONotFoundError MAY be used for errors related to not being able to find a KO using the provided ko path with error code 404:
 
     ```json
     HTTP/1.1 404 Not Found
@@ -319,7 +319,7 @@ The activator SHOULD use domain specific custom exceptions for error handling of
     }
     ```
 
-- InvalidInputParameterError MAY be used to handle errors related to the input parameters provided in the body of the http request for executing the endpoint function  with error code 500:
+- InvalidInputParameterError MAY be used to handle errors related to the input parameters provided in the body of the http request for executing the endpoint function with error code 500:
 
     ```json
     HTTP/1.1 500 Internal Server Error
@@ -344,7 +344,7 @@ The activator SHOULD use a short representation of KOs for logging including
 The following two activators are implemented as reference implementations of this specification 
 
 
-[Python Activator](https://github.com/kgrid/python-activator) and [JavaScrirpt Activator](https://github.com/kgrid/javascript-activator) are reference implementations of this Knowledge Grid Activator Specification and both adhere meticulously to this specification. They serves as reliable and compliant models for the activation of computable biomedical knowledge objects as per the specified guidelines.
+[Python Activator](https://github.com/kgrid/python-activator) and [JavaScrirpt Activator](https://github.com/kgrid/javascript-activator) are reference implementations of this Knowledge Grid Activator Specification and both adhere meticulously to this specification. They serve as reliable and compliant models for the activation of computable biomedical knowledge objects as per the specified guidelines.
 
 In the course of implementing the Python and JavaScript activator, certain aspects of the application required nuanced considerations due to rules that were not explicitly defined or were presented with a degree of flexibility in the specifications. To see more detail on these customizations and adaptations please see Customizations and Adaptations section of the documentation in each activator.
 
@@ -358,7 +358,7 @@ For environment variables to avoid conflicts with other activators and apps, the
 
 ### Knowledge Object Implementation <a name="object"></a>
 
-Knowledge object is a collection of metadata and binary files that together have a unique identifier (including a version identifier). There are some required and some optional file types in a knowledge object. These files, their content and the way they are structured inside a KO could vary deponding on which kgrid version is used to create the knowledge object. Please refere to [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) on our koio ontology repository for documentation on different versions of krid knowledge object model.
+Knowledge object is a collection of metadata and binary files that together have a unique identifier (including a version identifier). There are some required and some optional file types in a knowledge object. These files, their content and the way they are structured inside a KO could vary depending on which kgrid version is used to create the knowledge object. Please refer to [Kgrid Knowledge Objects](https://github.com/kgrid/koio/kgrid_knowledge_objects.md) on our koio ontology repository for documentation on different versions of kgrid knowledge object model.
 
 ## Related links
 - [Kgrid Website](https://kgrid.org/)
