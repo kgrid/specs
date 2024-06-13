@@ -1,47 +1,55 @@
+
 ```mermaid
 ---
-title: knowledge & implementaion classes are iao:InformationContentEntity or subtype
+title: Original KO model (all terms are `koio`)
 ---
-graph
-KO[
-    KO
-    rdf:container
-    koio:KnowledgeObject
-  ]
-S[Service
-          rdf:Resource
-          swo:SoftwareInterface
-          ] 
-K[
-    Knowledge
-    rdf:Resource
-  ]
-subgraph object
-KO -.-> m1("[metadata]")
-  subgraph knowledge
-  KO --rdf:member
-    --> S
-  S -- ro:depends on --> K
-  KO -- rdf:member
-  --> K
-  K -.-> m("[metadata]")
-S -.-> m2("[metadata]")
-  end
-  subgraph implementation
-    K -.swo:implemented by.-> I
-    S --dc:description--> SD[Interface Description
-    iao:DirectiveInformationEntity
-    >>specification<<]
-    S -.swo:implemented by.-> I[Implementation\nswo:SoftwareImplementation]
-  end
+graph LR
+
+Platform{{Platform}}
+TestPlatform{{TestPlatform}}
+Client{{Client}}
+
+subgraph Abstract description
+KO([KO])
+Service([Service])
+Knowledge([Knowledge])
+Tests([Tests])
 end
-```
 
-```mermaid
----
-title: material entity
----
+subgraph "Functional description (IAO, SWO)"
+Algorithm[[Algorithm]]
+Interface[[Interface]]
+APISpec[[APISpec]]
+FunctionalSpec[[FunctionalSpec]]
+end 
 
-graph 
+subgraph "Implementation"
+InterfaceImpl
+AlgorithmImpl
+TestsImpl
+end
+
+Client -.->|interactsWith| Interface
+Client -.->|uses| APISpec
+
+KO --hasService--> Service 
+Service --exposes--> Knowledge
+KO --hasKnowledge--> Knowledge
+Service --isA--> Interface
+Knowledge --isA--> Algorithm
+Service --validatedBy--> Tests
+
+Interface --hasImplementation--> InterfaceImpl 
+Interface --uses--> Algorithm
+Interface --describedBy--> APISpec
+Algorithm --describedBy--> FunctionalSpec
+Algorithm --hasImplementation--> AlgorithmImpl
+Tests --hasImplementation--> TestsImpl
+
+InterfaceImpl -.->|requires| Platform
+InterfaceImpl --provides--> APISpec
+AlgorithmImpl -.->|requires| Platform
+AlgorithmImpl --provides--> FunctionalSpec
+TestsImpl --requires--> TestPlatform
 
 ```
