@@ -591,8 +591,7 @@ bmi-calculator/
 ### Test Files
 
 The Ko may include some test files that test the KO payloads with some sample test cases.
-
-## Generate JSON_LD Context File From OWL File Using owl2jsonld Tool
+## Appendix A—Generate JSON_LD Context File From KOIO OWL File Using owl2jsonld Tool
 [owl2jsonld](https://github.com/stain/owl2jsonld) is a tool that generate a JSON-LD @context for concepts (classes and properties) found in the specified OWL or RDFS ontology. 
 1. Install Java
 ```batch
