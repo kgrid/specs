@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Kgrid Remote Runtime Spec | Knowledge Grid Specifications</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/specs/assets/css/0.styles.9cdcb7cf.css" as="style"><link rel="preload" href="/specs/assets/js/app.5515ff1c.js" as="script"><link rel="preload" href="/specs/assets/js/2.3dc1b8de.js" as="script"><link rel="preload" href="/specs/assets/js/1.7f771cfb.js" as="script"><link rel="preload" href="/specs/assets/js/27.55e7d8a2.js" as="script"><link rel="prefetch" href="/specs/assets/js/10.23a1f579.js"><link rel="prefetch" href="/specs/assets/js/11.c389195a.js"><link rel="prefetch" href="/specs/assets/js/12.1d996921.js"><link rel="prefetch" href="/specs/assets/js/13.4d4410c4.js"><link rel="prefetch" href="/specs/assets/js/14.37ef2a72.js"><link rel="prefetch" href="/specs/assets/js/15.5542c093.js"><link rel="prefetch" href="/specs/assets/js/16.d48fd1ce.js"><link rel="prefetch" href="/specs/assets/js/17.bd8d538c.js"><link rel="prefetch" href="/specs/assets/js/18.6d3b94c1.js"><link rel="prefetch" href="/specs/assets/js/19.eb35cfee.js"><link rel="prefetch" href="/specs/assets/js/20.c11ec329.js"><link rel="prefetch" href="/specs/assets/js/21.db1b5d88.js"><link rel="prefetch" href="/specs/assets/js/22.15d8f113.js"><link rel="prefetch" href="/specs/assets/js/23.37bc884b.js"><link rel="prefetch" href="/specs/assets/js/24.bd12738d.js"><link rel="prefetch" href="/specs/assets/js/25.3e0527be.js"><link rel="prefetch" href="/specs/assets/js/26.2d5985a6.js"><link rel="prefetch" href="/specs/assets/js/28.2a784fa8.js"><link rel="prefetch" href="/specs/assets/js/29.7877233e.js"><link rel="prefetch" href="/specs/assets/js/3.5322f14a.js"><link rel="prefetch" href="/specs/assets/js/30.f692d0c2.js"><link rel="prefetch" href="/specs/assets/js/31.ad36ceeb.js"><link rel="prefetch" href="/specs/assets/js/32.d025cd67.js"><link rel="prefetch" href="/specs/assets/js/4.84e1e480.js"><link rel="prefetch" href="/specs/assets/js/5.f0541060.js"><link rel="prefetch" href="/specs/assets/js/6.dfb06aa0.js"><link rel="prefetch" href="/specs/assets/js/7.7551a9fb.js"><link rel="prefetch" href="/specs/assets/js/vendors~docsearch.5e19b665.js">
+    <link rel="stylesheet" href="/specs/assets/css/0.styles.9cdcb7cf.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/specs/" class="home-link router-link-active"><img src="/specs/images/kgrid-logo.png" alt="Knowledge Grid Specifications" class="logo"> <span class="site-name can-hide">Knowledge Grid Specifications</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="https://kgrid.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  KGrid.org
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Specifications" class="dropdown-title"><span class="title">Specifications</span> <span class="arrow down"></span></button> <button type="button" aria-label="Specifications" class="mobile-dropdown-title"><span class="title">Specifications</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/specs/packaging.html" class="nav-link">
+  KGrid Common Package
+</a></li><li class="dropdown-item"><!----> <a href="/specs/activation.html" class="nav-link">
+  KGrid Activation
+</a></li><li class="dropdown-item"><!----> <a href="/specs/runtimes.html" class="nav-link">
+  KGrid Runtime Adapters
+</a></li><li class="dropdown-item"><!----> <a href="/specs/shelf-api.html" class="nav-link">
+  KGrid Shelf API
+</a></li><li class="dropdown-item"><!----> <a href="https://github.com/kgrid/koio" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  KOIO
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <a href="https://github.com/kgrid/specs" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="https://kgrid.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  KGrid.org
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Specifications" class="dropdown-title"><span class="title">Specifications</span> <span class="arrow down"></span></button> <button type="button" aria-label="Specifications" class="mobile-dropdown-title"><span class="title">Specifications</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/specs/packaging.html" class="nav-link">
+  KGrid Common Package
+</a></li><li class="dropdown-item"><!----> <a href="/specs/activation.html" class="nav-link">
+  KGrid Activation
+</a></li><li class="dropdown-item"><!----> <a href="/specs/runtimes.html" class="nav-link">
+  KGrid Runtime Adapters
+</a></li><li class="dropdown-item"><!----> <a href="/specs/shelf-api.html" class="nav-link">
+  KGrid Shelf API
+</a></li><li class="dropdown-item"><!----> <a href="https://github.com/kgrid/koio" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  KOIO
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <a href="https://github.com/kgrid/specs" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Kgrid Remote Runtime Spec</span> <!----></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="kgrid-remote-runtime-spec"><a href="#kgrid-remote-runtime-spec" class="header-anchor">#</a> Kgrid Remote Runtime Spec</h1> <p>##Overall Purpose
+This spec outlines the development of remote runtimes
+that communicate with the KGrid Activator via the Proxy Adapter's API.</p> <p>##Runtime Lifecycle</p> <ol><li><p>####Load Cache (Optional)
+Optionally, a runtime can choose to try to activate Knowledge Objects
+that have previously been loaded onto its internal persistence layer.
+This should not depend on having an Activator present.</p></li> <li><p>####Registration
+When first starting up, a remote runtime should call the registration
+endpoint on the Proxy Adapter like so:</p> <p>Endpoint:
+<code>POST</code> to <code>{ActivatorUrl}/proxy/environments</code></p> <p>Headers:
+<code>Content-Type: application/json</code></p> <p>Request Body:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;url&quot;</span><span class="token operator">:</span><span class="token string">&quot;{remoteRuntimeUrl}&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;engine&quot;</span><span class="token operator">:</span><span class="token string">&quot;{Engine (node, python, java, etc)}&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>This will register the runtime with the Proxy Adapter, so it has a handle
+on the location of the runtime and which engine the runtime handles.</p> <p>Response Body:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;registered&quot;</span><span class="token operator">:</span><span class="token string">&quot;success&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></li> <li><p>####Activation
+After the runtime receives the successful response from registration,
+it should then tell the Proxy Adapter to activate the Knowledge Objects
+it knows about that use that runtime's engine.</p> <p>Endpoint:
+<code>GET</code> to <code>{ActivatorUrl}/activate/{engine}</code></p> <p>Headers:
+<code>Content-Type: application/json</code></p> <p>Path Variable: <code>engine</code></p> <p>This will cause the activator to try to activate all KO endpoints
+that specify the given engine in their deployment specification.
+Response Body:</p> <div class="language-json extra-class"><pre class="language-json"><code>    <span class="token punctuation">[</span>
+         <span class="token punctuation">{</span>
+            <span class="token property">&quot;path&quot;</span><span class="token operator">:</span> <span class="token string">&quot;/naan/name/apiVersion/endpointName&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;activated&quot;</span><span class="token operator">:</span> <span class="token string">&quot;2020-11-11T15:57:10.499402&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;status&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Activated&quot;</span>
+         <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+</code></pre></div><p>As part of this work, the Proxy Adapter will then <code>POST</code> to the
+runtime's <code>endpoints</code> endpoint for each endpoint it has for that
+engine like so:</p> <p>Endpoint:
+<code>POST</code> to <code>{RuntimeUrl}/endpoints</code></p> <p>Headers:
+<code>Content-Type: application/json</code></p> <p>Request Body:</p> <div class="language-json extra-class"><pre class="language-json"><code>    <span class="token punctuation">{</span>
+        <span class="token property">&quot;baseUrl&quot;</span><span class="token operator">:</span><span class="token string">&quot;{activatorUrl}/proxy/naan/name/version/&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;uri&quot;</span><span class="token operator">:</span> <span class="token string">&quot;naan/name/apiVersion/endpointName&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;artifact&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>
+          <span class="token string">&quot;src/payloadFile1.js&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;src/payloadFile2.js&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;engine&quot;</span><span class="token operator">:</span><span class="token string">&quot;node&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;entry&quot;</span><span class="token operator">:</span><span class="token string">&quot;src/payloadFile1.js&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;function&quot;</span><span class="token operator">:</span><span class="token string">&quot;mainMethod&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;checksum&quot;</span><span class="token operator">:</span><span class="token string">&quot;f8eaf89af8ar5gg5er8s9g8b9&quot;</span>
+    <span class="token punctuation">}</span>
+</code></pre></div><p>where:</p> <ul><li><code>baseUrl</code> is the URL of the KO containing the endpoint being activated</li> <li><code>uri</code> is the URI of the endpoint in the activator</li> <li><code>artifact</code> is a list of all the payload files needed for the activated endpoint</li> <li><code>engine</code> is the engine the endpoint uses</li> <li><code>entry</code> is the path to the payload file containing the main method</li> <li><code>function</code> is the name of the main method</li> <li><code>checksum</code> is a checksum created when packaging the KO</li></ul> <p>Response Body from runtime:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+     <span class="token property">&quot;id&quot;</span><span class="token operator">:</span><span class="token string">&quot;naan/name/apiVersion/endpointName&quot;</span><span class="token punctuation">,</span>
+     <span class="token property">&quot;uri&quot;</span><span class="token operator">:</span><span class="token string">&quot;{internal runtime uri}&quot;</span><span class="token punctuation">,</span>
+     <span class="token property">&quot;activated&quot;</span><span class="token operator">:</span><span class="token string">&quot;2020-11-11T15:57:10.499402&quot;</span><span class="token punctuation">,</span>
+     <span class="token property">&quot;status&quot;</span><span class="token operator">:</span><span class="token string">&quot;Activated&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Optionally, (if a runtime has a persistence layer on which it stores activated
+endpoints) runtimes can choose whether or not to download the binaries
+for an endpoint by comparing the checksum from the last time that endpoint
+was activated. It should just respond as if it downloaded and activated
+the endpoint as normal in this case.</p> <p>#####Managing Dependencies for KOs
+Many languages and frameworks, like node and python,
+rely on published packages to do some work without reinventing the wheel.
+For example, node uses package.json to declare which dependencies
+the code will need. In Python, a developer may include a requirements.txt
+file or call it out in their setup.py.</p> <p>A runtime must have a way of finding and including these dependencies, unless
+the runtime is designed to only handle bundled Knowledge Objects.</p></li></ol> <p>##Execution Lifecycle
+Now that the runtime has got some endpoints loaded, it must make them
+available at the endpoints at which it told the activator they would
+be able to be called in the following format:
+<code>{runtimeUrl}/{endpointUri}</code></p> <p>For example:</p> <p><code>http://localhost:1234/naan_name_apiVersion_endpointName</code></p> <p>or</p> <p><code>https://my-remote-runtime.herokuapp.com/234985437523</code></p> <p>Endpoint:
+<code>POST</code> to <code>{RuntimeUrl}/{endpointUri}</code></p> <p>Headers:</p> <div class="language- extra-class"><pre class="language-text"><code>Whatever headers the KO endpoint requires
+</code></pre></div><p>Request Body:</p> <div class="language- extra-class"><pre class="language-text"><code>Whatever inputs the KO endpoint is looking for
+</code></pre></div><p>Response Body:</p> <div class="language- extra-class"><pre class="language-text"><code>Whatever response the KO endpoint wants to return
+</code></pre></div><p>Keep in mind, the endpointUri that the runtime gives to the activator is
+entirely up to the runtime, and does not need to be in any specific
+format.</p> <p>###Simple KO
+The most basic Knowledge Objects will just contain one code file, take
+some inputs, and return an output. Nothing special from what is described above.</p> <p>###Executive KO
+In some cases, a KO developer will want one KO endpoint to call other
+loaded Knowledge Objects. We refer to these as Executive KOs. In this
+case, the runtime will have to have loaded the child KO being called
+into some kind of context accessible by the executive KO.</p> <p>##Necessary Endpoints
+###POST /endpoints
+This endpoint is for the loading of endpoints into the runtime.</p> <p>Endpoint:
+<code>POST</code> to <code>{RuntimeUrl}/endpoints</code></p> <p>Headers:
+<code>Content-Type: application/json</code></p> <p>Request Body:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;baseUrl&quot;</span><span class="token operator">:</span><span class="token string">&quot;{activatorUrl}/proxy/naan/name/version/&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;uri&quot;</span><span class="token operator">:</span> <span class="token string">&quot;naan/name/apiVersion/endpointName&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;artifact&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>
+    <span class="token string">&quot;src/payloadFile1.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;src/payloadFile2.js&quot;</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;engine&quot;</span><span class="token operator">:</span><span class="token string">&quot;node&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;entry&quot;</span><span class="token operator">:</span><span class="token string">&quot;src/payloadFile1.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;function&quot;</span><span class="token operator">:</span><span class="token string">&quot;mainMethod&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;checksum&quot;</span><span class="token operator">:</span><span class="token string">&quot;f8eaf89af8ar5gg5er8s9g8b9&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>where:</p> <ul><li><code>baseUrl</code> is the URL of the KO containing the endpoint being activated</li> <li><code>uri</code> is the URI of the endpoint in the activator</li> <li><code>artifact</code> is a list of all the payload files needed for the activated endpoint</li> <li><code>engine</code> is the engine the endpoint uses</li> <li><code>entry</code> is the path to the payload file containing the main method</li> <li><code>function</code> is the name of the main method</li> <li><code>checksum</code> is a checksum created when packaging the KO</li></ul> <p>Response Body from runtime:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+ <span class="token property">&quot;id&quot;</span><span class="token operator">:</span><span class="token string">&quot;naan/name/apiVersion/endpointName&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;uri&quot;</span><span class="token operator">:</span><span class="token string">&quot;{internal runtime uri}&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;activated&quot;</span><span class="token operator">:</span><span class="token string">&quot;2020-11-11T15:57:10.499402&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;status&quot;</span><span class="token operator">:</span><span class="token string">&quot;Activated&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>###GET  /endpoints
+Returns a list of all the endpoints the runtime knows about.</p> <p>Endpoint:
+<code>GET</code> to <code>{RuntimeUrl}/endpoints</code></p> <p>Headers:
+<code>Content-Type: application/json</code></p> <p>Response Body from runtime:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">[</span>
+   <span class="token punctuation">{</span>
+       <span class="token property">&quot;url&quot;</span><span class="token operator">:</span> <span class="token string">&quot;{runtimeUrl}/{endpointUri}&quot;</span><span class="token punctuation">,</span>
+       <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;naan/name/apiVersion/endpointUri&quot;</span><span class="token punctuation">,</span>
+       <span class="token property">&quot;activated&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Wed Nov 11 2020 17:01:17 GMT-0500 (Eastern Standard Time)&quot;</span><span class="token punctuation">,</span>
+       <span class="token property">&quot;status&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Activated&quot;</span>
+     <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre></div><p>###GET  /info
+Returns an object containing information about this runtime.</p> <p>Endpoint:
+<code>GET</code> to <code>{RuntimeUrl}/info</code></p> <p>Headers:
+<code>Content-Type: application/json</code></p> <p>Response Body from runtime:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+ <span class="token property">&quot;app&quot;</span><span class="token operator">:</span> <span class="token string">&quot;My runtime name&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;version&quot;</span><span class="token operator">:</span> <span class="token string">&quot;0.3.1&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;engine&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;status&quot;</span><span class="token operator">:</span> <span class="token string">&quot;up&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;url&quot;</span><span class="token operator">:</span> <span class="token string">&quot;{runtimeUrl}&quot;</span><span class="token punctuation">,</span>
+ <span class="token property">&quot;activatorUrl&quot;</span><span class="token operator">:</span> <span class="token string">&quot;{activatorUrl}&quot;</span>
+ <span class="token punctuation">}</span>
+</code></pre></div><p>###GET  /register
+Triggers registration with the Activator.</p> <p>Endpoint:
+<code>GET</code> to <code>{RuntimeUrl}/register</code></p> <p>##Error Handling
+Registration
+Activation
+Malformed KO
+Syntax Error
+Execution
+Syntax Error
+Bad Mimetype</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">11/13/2020, 2:35:00 PM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/specs/assets/js/app.5515ff1c.js" defer></script><script src="/specs/assets/js/2.3dc1b8de.js" defer></script><script src="/specs/assets/js/1.7f771cfb.js" defer></script><script src="/specs/assets/js/27.55e7d8a2.js" defer></script>
+  </body>
+</html>
