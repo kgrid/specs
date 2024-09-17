@@ -13,8 +13,11 @@ npm install
 ```
 
 To build the static web pages for deployment use the following command from the root 
+
 ```
-export NODE_OPTIONS=--openssl-legacy-provider
+# export NODE_OPTIONS=--openssl-legacy-provider
+# the above environment variable is only needed for older versions of npm and cause issues for newer versions so commented out here
+
 npm run build
 ```
 
